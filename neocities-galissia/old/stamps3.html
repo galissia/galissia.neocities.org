@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gal's Corner</title>
+
+
+<link href="https://fonts.cdnfonts.com/css/elmono-2" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/freezeframe@3.0.10/build/css/freezeframe_styles.min.css">
+<style>.ff-container{display:inline-flex;}</style>
+<script src="https://unpkg.com/freezeframe@3.0.10/build/js/freezeframe.pkgd.min.js"></script>
+         <link rel="shortcut icon" type="image/x-icon" href="/favicon.png">       
+<style type="text/css">* {cursor: url(https://cur.cursors-4u.net/nature/nat-10/nat996.cur), auto !important;}</style><a href="https://www.cursors-4u.com/cursor/2011/12/29/tiny-star.html" target="_blank" title="Tiny Star"><img src="https://cur.cursors-4u.net/cursor.png" border="0" alt="Tiny Star" style="position:absolute; top: 0px; right: 0px;" /></a>
+<script>
+    $(function() {
+        third = new freezeframe('.freezeframe').capture().setup();
+        $('.play-gif').click(function(e) {
+            e.preventDefault();
+            third.trigger();
+        });
+        $('.stop-gif').click(function(e) {
+            e.preventDefault();
+            third.release();
+        });
+    })
+</script>
+<script type="text/javascript">
+// <![CDATA[
+var colour="#ffffff"; // in addition to "random" can be set to any valid colour eg "#f0f" or "red"
+var sparkles=50;
+
+/****************************
+*  Tinkerbell Magic Sparkle *
+*(c)2005-13 mf2fm web-design*
+*  http://www.mf2fm.com/rv  *
+* DON'T EDIT BELOW THIS BOX *
+****************************/
+var x=ox=400;
+var y=oy=300;
+var swide=800;
+var shigh=600;
+var sleft=sdown=0;
+var tiny=new Array();
+var star=new Array();
+var starv=new Array();
+var starx=new Array();
+var stary=new Array();
+var tinyx=new Array();
+var tinyy=new Array();
+var tinyv=new Array();
+
+window.onload=function() { if (document.getElementById) {
+  var i, rats, rlef, rdow;
+  for (var i=0; i<sparkles; i++) {
+    var rats=createDiv(3, 3);
+    rats.style.visibility="hidden";
+    rats.style.zIndex="999";
+    document.body.appendChild(tiny[i]=rats);
+    starv[i]=0;
+    tinyv[i]=0;
+    var rats=createDiv(5, 5);
+    rats.style.backgroundColor="transparent";
+    rats.style.visibility="hidden";
+    rats.style.zIndex="999";
+    var rlef=createDiv(1, 5);
+    var rdow=createDiv(5, 1);
+    rats.appendChild(rlef);
+    rats.appendChild(rdow);
+    rlef.style.top="2px";
+    rlef.style.left="0px";
+    rdow.style.top="0px";
+    rdow.style.left="2px";
+    document.body.appendChild(star[i]=rats);
+  }
+  set_width();
+  sparkle();
+}}
+
+function sparkle() {
+  var c;
+  if (Math.abs(x-ox)>1 || Math.abs(y-oy)>1) {
+    ox=x;
+    oy=y;
+    for (c=0; c<sparkles; c++) if (!starv[c]) {
+      star[c].style.left=(starx[c]=x)+"px";
+      star[c].style.top=(stary[c]=y+1)+"px";
+      star[c].style.clip="rect(0px, 5px, 5px, 0px)";
+      star[c].childNodes[0].style.backgroundColor=star[c].childNodes[1].style.backgroundColor=(colour=="random")?newColour():colour;
+      star[c].style.visibility="visible";
+      starv[c]=50;
+      break;
+    }
+  }
+  for (c=0; c<sparkles; c++) {
+    if (starv[c]) update_star(c);
+    if (tinyv[c]) update_tiny(c);
+  }
+  setTimeout("sparkle()", 40);
+}
+
+function update_star(i) {
+  if (--starv[i]==25) star[i].style.clip="rect(1px, 4px, 4px, 1px)";
+  if (starv[i]) {
+    stary[i]+=1+Math.random()*3;
+    starx[i]+=(i%5-2)/5;
+    if (stary[i]<shigh+sdown) {
+      star[i].style.top=stary[i]+"px";
+      star[i].style.left=starx[i]+"px";
+    }
+    else {
+      star[i].style.visibility="hidden";
+      starv[i]=0;
+      return;
+    }
+  }
+  else {
+    tinyv[i]=50;
+    tiny[i].style.top=(tinyy[i]=stary[i])+"px";
+    tiny[i].style.left=(tinyx[i]=starx[i])+"px";
+    tiny[i].style.width="2px";
+    tiny[i].style.height="2px";
+    tiny[i].style.backgroundColor=star[i].childNodes[0].style.backgroundColor;
+    star[i].style.visibility="hidden";
+    tiny[i].style.visibility="visible"
+  }
+}
+
+function update_tiny(i) {
+  if (--tinyv[i]==25) {
+    tiny[i].style.width="1px";
+    tiny[i].style.height="1px";
+  }
+  if (tinyv[i]) {
+    tinyy[i]+=1+Math.random()*3;
+    tinyx[i]+=(i%5-2)/5;
+    if (tinyy[i]<shigh+sdown) {
+      tiny[i].style.top=tinyy[i]+"px";
+      tiny[i].style.left=tinyx[i]+"px";
+    }
+    else {
+      tiny[i].style.visibility="hidden";
+      tinyv[i]=0;
+      return;
+    }
+  }
+  else tiny[i].style.visibility="hidden";
+}
+
+document.onmousemove=mouse;
+function mouse(e) {
+  if (e) {
+    y=e.pageY;
+    x=e.pageX;
+  }
+  else {
+    set_scroll();
+    y=event.y+sdown;
+    x=event.x+sleft;
+  }
+}
+
+window.onscroll=set_scroll;
+function set_scroll() {
+  if (typeof(self.pageYOffset)=='number') {
+    sdown=self.pageYOffset;
+    sleft=self.pageXOffset;
+  }
+  else if (document.body && (document.body.scrollTop || document.body.scrollLeft)) {
+    sdown=document.body.scrollTop;
+    sleft=document.body.scrollLeft;
+  }
+  else if (document.documentElement && (document.documentElement.scrollTop || document.documentElement.scrollLeft)) {
+    sleft=document.documentElement.scrollLeft;
+    sdown=document.documentElement.scrollTop;
+  }
+  else {
+    sdown=0;
+    sleft=0;
+  }
+}
+
+window.onresize=set_width;
+function set_width() {
+  var sw_min=999999;
+  var sh_min=999999;
+  if (document.documentElement && document.documentElement.clientWidth) {
+    if (document.documentElement.clientWidth>0) sw_min=document.documentElement.clientWidth;
+    if (document.documentElement.clientHeight>0) sh_min=document.documentElement.clientHeight;
+  }
+  if (typeof(self.innerWidth)=='number' && self.innerWidth) {
+    if (self.innerWidth>0 && self.innerWidth<sw_min) sw_min=self.innerWidth;
+    if (self.innerHeight>0 && self.innerHeight<sh_min) sh_min=self.innerHeight;
+  }
+  if (document.body.clientWidth) {
+    if (document.body.clientWidth>0 && document.body.clientWidth<sw_min) sw_min=document.body.clientWidth;
+    if (document.body.clientHeight>0 && document.body.clientHeight<sh_min) sh_min=document.body.clientHeight;
+  }
+  if (sw_min==999999 || sh_min==999999) {
+    sw_min=800;
+    sh_min=600;
+  }
+  swide=sw_min;
+  shigh=sh_min;
+}
+
+function createDiv(height, width) {
+  var div=document.createElement("div");
+  div.style.position="absolute";
+  div.style.height=height+"px";
+  div.style.width=width+"px";
+  div.style.overflow="hidden";
+  return (div);
+}
+
+function newColour() {
+  var c=new Array();
+  c[0]=255;
+  c[1]=Math.floor(Math.random()*256);
+  c[2]=Math.floor(Math.random()*(256-c[1]/2));
+  c.sort(function(){return (0.5 - Math.random());});
+  return ("rgb("+c[0]+", "+c[1]+", "+c[2]+")");
+}
+// ]]>
+</script>
+<style>
+.marquee {
+            overflow: hidden;
+            position: relative;
+            left: 2px;
+            align-items: center;
+            justify-content: center;
+            height: 52px;
+            width: 790px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+.marquee {}
+
+        .marquee-inner {
+            display: block;
+            width: 3540px;
+            /* max width of banner */
+            position: absolute;
+            animation: marquee 30s linear infinite;
+            font-size: 0px;
+        }
+
+        .marquee-inner img {
+            margin-right: 1px;
+            margin-left: 1px;
+            margin-top: 1px;
+        }
+
+        .marquee-inner span {
+            float: left;
+            width: 50%;
+            overflow: hidden;
+        }
+
+        @keyframes marquee {
+            0% {
+                left: 0;
+            }
+
+            100% {
+                left: -1404px;
+                /* half of banner width */
+            }
+        }
+body{
+background-color: #B7C8F5;
+font-family: 'Elmono', sans-serif;
+}
+
+#container{
+display: flex;
+justify-content: center;
+align-items: center;
+width: 1000px;
+margin: 0 auto;
+border: 1px solid #6351C6;
+padding: 3px;
+}
+
+#box{
+width: 1000px;
+background-color: #ECFAFF;
+color: #000;
+border: 1px solid #6351C6;
+}
+
+#header{
+margin-bottom: 10px;
+padding: 10px;
+border-bottom: 1px solid #6351C6;
+background-image: linear-gradient(to right, #6351C6, #E3BFFF);
+color: #fff;
+letter-spacing: 3px;
+}
+
+#header h1{
+margin: 0px;
+}
+
+#side{
+float: left;
+width: 225px;
+padding: 0px 0px 5px 10px;
+overflow: hidden;
+}
+
+.sidebox{
+border: 1px solid #6351C6;
+margin: 0px 0px 5px 0px;
+}
+
+.sidecontent{
+padding: 0px 0px 0px 5px;
+color: #6e5057;
+font-size: 17px;
+letter-spacing: 1px;
+}
+
+.sidecontent ul, li{
+margin: 0px;
+list-style-type: none;
+padding-left: 0px;
+}
+
+a{
+text-decoration: none;
+color: #6351C6;
+}
+
+a:visited{
+color: #6351C6;
+}
+
+a:hover{
+text-shadow: 0px 0px 2px #78beff;
+}
+
+#scrollcontainer{
+padding: 5px;
+}
+
+
+
+#main{
+float: right;
+width: 730px;
+overflow: scroll;
+overflow-x: hidden;
+overflow-y: auto;
+height: 650px; 
+padding: 0px 10px 5px 0px;
+}
+.mainboxes{
+border: 1px solid #6351C6;
+padding: 0px;
+margin: 0px 0px 5px 0px;
+}
+
+.subheader{
+background-image: linear-gradient(to right, #6351C6, #E3BFFF);
+border-bottom: 1px solid #6351C6;
+padding: 3px;
+color: #fff;
+letter-spacing: 3px;
+}
+
+.subheader h3{
+margin: 0px;
+}
+
+.mainboxescontent{
+padding: 0px 15px 0px 15px;
+color: #6e5057;
+font-size: 17px;
+overflow:scroll;
+}
+
+#footer{
+clear: both;
+padding: 3px;
+max-height: 85px;
+border-top: 1px solid #6351C6;
+background-image: linear-gradient(to right, #6351C6, #E3BFFF);
+color: #fff;
+font-size: 14px;
+}
+
+#footer p{
+margin: 0px;
+}
+
+::-webkit-scrollbar{
+width: 8px; 
+}
+    
+::-webkit-scrollbar-track{
+background-color: #ECFAFF;
+}
+
+::-webkit-scrollbar-thumb{
+background-color: #6351C6;  
+}
+
+#credit{
+font-size: 12px;
+position: fixed;
+bottom: 0;
+right: 0;
+}
+#statuscafe {
+    padding: .5em;
+    
+   
+}
+#statuscafe-username {
+    margin-bottom: .5em;
+}
+#statuscafe-content {
+    margin: 0 1em 0.5em 1em;
+}
+
+
+</style>
+<script>
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        var site_data = JSON.parse(this.responseText);
+        var num_arr = site_data.info.views.toString().split("");
+        var num_str = "";
+        for (i = 0; i < num_arr.length; i++) {
+            num_str += num_arr[i];
+            if ( (num_arr.length-1 - i) % 3 == 0 && (num_arr.length-1 - i) != 0 ) {num_str += ",";}
+            var date_str = site_data.info.last_updated;
+            var date_obj = new Date(site_data.info.last_updated);
+var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+document.getElementById("lastupdate").innerHTML = days[date_obj.getDay()] + " " + months[date_obj.getMonth()] + " " + date_obj.getDate() + ", " + date_obj.getFullYear();
+        }
+        document.getElementById("hitcount").innerHTML = num_str;
+    }
+};
+xhttp.open("GET", "https://weirdscifi.ratiosemper.com/neocities.php?sitename=galissia", true);
+xhttp.send();
+</script>
+
+
+<script src="https://unpkg.com/freezeframe/dist/freezeframe.min.js"></script>
+</head>
+
+<body>
+
+<div id="container">
+
+<div id="box">
+
+<div id="header"><h1 style="text-align:center">☆ Gal's Corner ☆</h1>
+</div>
+
+
+<div id="side">
+
+<div class="sidebox">
+
+<div class="subheader"><h3>Navigate</h3></div>
+
+<div class="sidecontent">
+
+<!-- LINK BOX 1 -->
+
+<ul>
+<li><a href="https://galissia.neocities.org/about">☆ about me!</a></li>
+<li><a href="https://galissia.neocities.org/Interests">☆ Interests</a></li>
+<li><a href="https://galissia.neocities.org/websites">☆ neat links</a></li>
+<li><a href="https://galissia.thoughts.page">☆ blog</a></li>
+<li><a href="https://galissia.neocities.org/changelog">☆ changelog</a></li>
+<li><a href="https://galissia.neocities.org/map">☆ sitemap</a></li>
+<li><a href="https://galissia.neocities.org/index">☆ home</a></li>
+</ul>
+<!-- END LINK BOX 1 -->
+
+</div>
+</div>
+
+<div class="sidebox">
+
+<div class="subheader"><h3>Fun Stuff</h3></div>
+
+<div class="sidecontent">
+
+<!-- LINK BOX 2 -->
+
+<li><a href="https://galissia.123guestbook.com">☆ guestbook</a></li>
+<li><a href="https://galissia.neocities.org/stamps">☆ stamps</a></li>
+<li><a href="https://galissia.neocities.org/toybox">☆ toybox</a></li>
+<li><a href="/friendcodes.html">☆ friend codes</a></li>
+
+<!-- END LINK BOX 2 -->
+
+</div>
+</div>
+
+<div class="sidebox">
+
+<div class="subheader"><h3>☆ status ☆ </h3></div>
+
+<div class="sidecontent" id="scrollcontainer">
+
+<div id="scrolly">
+
+<!-- SCROLLBOX CONTENT -->
+
+
+<div id="scrollycontent" style="padding:5px;">
+<div id="statuscafe"><div id="statuscafe-username"></div><div id="statuscafe-content"></div></div><script src="https://status.cafe/current-status.js?name=galissia" defer></script>
+
+
+<!-- END SCROLLBOX CONTENT -->
+
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div id="main">
+
+<div class="mainboxes">
+
+<div class="subheader"><h3 style="text-align:center">stamps & blinkies</h3></div>
+
+<div class="mainboxescontent">
+<br>
+<center><font size="4em"> ⚠ teeny flash warning for this page! there's nothing too severe, but stay safe!!</font></center><br>
+<center><button class="play-gif" style="background-color: #957cdc;
+			color:white;
+			margin: 0 auto 1rem;
+			line-height: 1.25;
+			border: 2px solid #a187e2;
+			font-size: 1.2em;
+			font-family: 'Elmono', sans-serif;">Play GIFs</button>
+			<button class="stop-gif" style="background-color: #957cdc;
+			color:white;
+			margin: 0 auto 1rem;
+			line-height: 1.25;
+			border: 2px solid #a187e2;
+			font-size: 1.2em;
+			font-family: 'Elmono', sans-serif;">Stop GIFs</button>
+</center>
+<p align="center"><img src="https://f2.toyhou.se/file/f2-toyhou-se/images/63409130_8OTaaNPB2nSEmGp.png" width="">
+<img src="https://f2.toyhou.se/file/f2-toyhou-se/images/63408741_ftrENxtsqay80ga.png" width="">
+<img src="https://f2.toyhou.se/file/f2-toyhou-se/images/58111001_1XxGABrK3SNOdJr.png?1680847794" width="">
+<img src="images/bisexual.png" width="">
+<img src="images/aromantic.png" width="">
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/b4e8bd1b-f61a-4587-a9a1-2d7f5beca80c/dacvr2c-6495bc48-a0ab-4f5f-b2b7-353657c8b79a.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2I0ZThiZDFiLWY2MWEtNDU4Ny1hOWExLTJkN2Y1YmVjYTgwY1wvZGFjdnIyYy02NDk1YmM0OC1hMGFiLTRmNWYtYjJiNy0zNTM2NTdjOGI3OWEucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.BpEx02xsSj3DO7kZl_dFvWDOmj8M9vwt3sgA-hAKPv8" width="">
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/d73e54ad-c670-4f1b-b606-e0786ac039d8/ddmof2i-e96fd226-13fb-49ad-90dc-6d110419bc79.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2Q3M2U1NGFkLWM2NzAtNGYxYi1iNjA2LWUwNzg2YWMwMzlkOFwvZGRtb2YyaS1lOTZmZDIyNi0xM2ZiLTQ5YWQtOTBkYy02ZDExMDQxOWJjNzkucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.5djL975cYDB6cdiRAD5iu8b9b7I72uB6DRfvsiIf1IM" width="">
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/d73e54ad-c670-4f1b-b606-e0786ac039d8/ddec5qw-9669a6c4-4058-4580-8eb1-303111b0dd97.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2Q3M2U1NGFkLWM2NzAtNGYxYi1iNjA2LWUwNzg2YWMwMzlkOFwvZGRlYzVxdy05NjY5YTZjNC00MDU4LTQ1ODAtOGViMS0zMDMxMTFiMGRkOTcucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.iE-7VMaY8M8zflmSTmWW4u-Rdd8yrSWS2R2d114E3Qw" width="">
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/d73e54ad-c670-4f1b-b606-e0786ac039d8/dcg6z6z-776b9e78-22f6-4cb3-87a8-012920ed6197.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2Q3M2U1NGFkLWM2NzAtNGYxYi1iNjA2LWUwNzg2YWMwMzlkOFwvZGNnNno2ei03NzZiOWU3OC0yMmY2LTRjYjMtODdhOC0wMTI5MjBlZDYxOTcucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.WjXWWNUNHaMje2ytURl_T1ualJ1cxw7vMPlhzQYoQcE" width="">
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/d73e54ad-c670-4f1b-b606-e0786ac039d8/dcg6yde-17a55c9d-eb2f-4da8-8d3b-a9ae0524cd27.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2Q3M2U1NGFkLWM2NzAtNGYxYi1iNjA2LWUwNzg2YWMwMzlkOFwvZGNnNnlkZS0xN2E1NWM5ZC1lYjJmLTRkYTgtOGQzYi1hOWFlMDUyNGNkMjcucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.k10eYiwk_sLf4RVfvtEeDVcu--BPdtjYRLfOL5Mlu8g" width="">
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/d73e54ad-c670-4f1b-b606-e0786ac039d8/dcg6ynb-2d52a255-97ea-4d1d-9e3c-5a1dd7b743fc.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2Q3M2U1NGFkLWM2NzAtNGYxYi1iNjA2LWUwNzg2YWMwMzlkOFwvZGNnNnluYi0yZDUyYTI1NS05N2VhLTRkMWQtOWUzYy01YTFkZDdiNzQzZmMucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.dq0O8iUX-OXQLnOx0hCtCaaFBixPMx6JvHg-z5yJi5I" width="">
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/db7d8154-b5d2-412c-b2fe-761a8d791576/daincus-2266f557-e387-4cbf-bf0f-14256d7e9b6d.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2RiN2Q4MTU0LWI1ZDItNDEyYy1iMmZlLTc2MWE4ZDc5MTU3NlwvZGFpbmN1cy0yMjY2ZjU1Ny1lMzg3LTRjYmYtYmYwZi0xNDI1NmQ3ZTliNmQucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.TWLKut5_aWk2lbUEE76rwT-hC8hHLbv-9wOZ3j0yY3Q" width="">
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a3862daf-79c6-4ad7-8737-51fd92bf85e1/dbfliwc-2a84f14e-1f84-45bf-b0af-912a70722303.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2EzODYyZGFmLTc5YzYtNGFkNy04NzM3LTUxZmQ5MmJmODVlMVwvZGJmbGl3Yy0yYTg0ZjE0ZS0xZjg0LTQ1YmYtYjBhZi05MTJhNzA3MjIzMDMucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.UvnGBDAlukFdFISgJqyj1ndUeZVQ3__h-Mr52ZAQbPM" width="">
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a3862daf-79c6-4ad7-8737-51fd92bf85e1/dbfl32q-ed8c1d8d-83f6-4ff6-9d4d-6eea4cef7b47.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2EzODYyZGFmLTc5YzYtNGFkNy04NzM3LTUxZmQ5MmJmODVlMVwvZGJmbDMycS1lZDhjMWQ4ZC04M2Y2LTRmZjYtOWQ0ZC02ZWVhNGNlZjdiNDcucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.JopaEdDNrOjCqvbWq7ABVxck118_pHXw6LAIMDFPRpY" width="">
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/db7d8154-b5d2-412c-b2fe-761a8d791576/dactquk-0bad59bb-bbbc-449b-9a07-d84a1e6c32d8.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2RiN2Q4MTU0LWI1ZDItNDEyYy1iMmZlLTc2MWE4ZDc5MTU3NlwvZGFjdHF1ay0wYmFkNTliYi1iYmJjLTQ0OWItOWEwNy1kODRhMWU2YzMyZDgucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.IVIT5T-EjEmrNag1M8raCDmS0P292FprqYCF1ieJBuU" width="">
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/7cc7b93c-7ec2-41c9-a1bf-23bf37e36c9b/d10343i-e648db04-d3fc-42a0-b6ec-94ac8edb5e28.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzdjYzdiOTNjLTdlYzItNDFjOS1hMWJmLTIzYmYzN2UzNmM5YlwvZDEwMzQzaS1lNjQ4ZGIwNC1kM2ZjLTQyYTAtYjZlYy05NGFjOGVkYjVlMjguanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.XUeOfb4CCgJzM_DBZZN9CYMh_o3m5h3Tc3iz-6iCf-0" width="">
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/97308d48-a829-4445-8de4-257c4a9be042/dc728yg-ce9934e4-7483-41cf-8e71-564e2ef313fd.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzk3MzA4ZDQ4LWE4MjktNDQ0NS04ZGU0LTI1N2M0YTliZTA0MlwvZGM3Mjh5Zy1jZTk5MzRlNC03NDgzLTQxY2YtOGU3MS01NjRlMmVmMzEzZmQucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.CV6dae4ah8UZ9RCMGNuM3if56FvKfNt5rkY3nyAua3I" width="">
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/5341b45f-8f37-4f05-85a8-e4f659a243cd/db3q2dl-4ff8c0ae-daf8-408b-888c-fee8a7cc6758.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzUzNDFiNDVmLThmMzctNGYwNS04NWE4LWU0ZjY1OWEyNDNjZFwvZGIzcTJkbC00ZmY4YzBhZS1kYWY4LTQwOGItODg4Yy1mZWU4YTdjYzY3NTgucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.3xhmPM31rLV79Seihje-CirO_NaLSNxPqvEGvkHw9hk" width="">
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/5341b45f-8f37-4f05-85a8-e4f659a243cd/db0w9kg-6e6e7edb-996b-4c85-9b25-d7cb8e842402.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzUzNDFiNDVmLThmMzctNGYwNS04NWE4LWU0ZjY1OWEyNDNjZFwvZGIwdzlrZy02ZTZlN2VkYi05OTZiLTRjODUtOWIyNS1kN2NiOGU4NDI0MDIucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.XZjQkLFoo7gtNO_W048o9gZmirWcU-rQD6AoiV0Ar9g" width="">
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/3e9746a0-98e8-4180-bb53-9851877cc093/d19ze0z-ae5cad08-5e36-4d1c-959e-f7e8e9cf91e3.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzNlOTc0NmEwLTk4ZTgtNDE4MC1iYjUzLTk4NTE4NzdjYzA5M1wvZDE5emUwei1hZTVjYWQwOC01ZTM2LTRkMWMtOTU5ZS1mN2U4ZTljZjkxZTMuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.E3gWrQ3R_L8NeFDKGU-e51HWkKwAzQc9zKIgnCa-FpE" width="">
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/9472ae13-5ff6-44f7-9ada-937c56c89365/d47hz85-5c735968-72be-401f-8c09-c84ec6a028d9.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzk0NzJhZTEzLTVmZjYtNDRmNy05YWRhLTkzN2M1NmM4OTM2NVwvZDQ3aHo4NS01YzczNTk2OC03MmJlLTQwMWYtOGMwOS1jODRlYzZhMDI4ZDkucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.L6_fiDi4RmB4pocv6KeFiRgAgpagFnDBlH3GruJ5nnY" width="">
+<img src="/images/nightperson.gif" class="freezeframe" max-width="99px;">
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/d73e54ad-c670-4f1b-b606-e0786ac039d8/ddd7eiv-f8dcd8e0-b982-49bb-8cfa-515c1a9db95c.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2Q3M2U1NGFkLWM2NzAtNGYxYi1iNjA2LWUwNzg2YWMwMzlkOFwvZGRkN2Vpdi1mOGRjZDhlMC1iOTgyLTQ5YmItOGNmYS01MTVjMWE5ZGI5NWMucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.4Z3BHcSiqT3jjUtMw3bwNrEO2lW1SCzV9YvtMer0nkg" width="">
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/e6eab934-b759-4bbc-8275-2a2d32641804/d1tduty-38887a9b-b36c-4e8c-9da4-0329b2f3c057.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2U2ZWFiOTM0LWI3NTktNGJiYy04Mjc1LTJhMmQzMjY0MTgwNFwvZDF0ZHV0eS0zODg4N2E5Yi1iMzZjLTRlOGMtOWRhNC0wMzI5YjJmM2MwNTcuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.yUmq2XidNykqOpZX5GZ-h3vcCiidQAKN2hcS1p1x2qs" width="">
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/e6eab934-b759-4bbc-8275-2a2d32641804/d1tdv2w-297e79f0-ce62-448b-b820-118151b961ea.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2U2ZWFiOTM0LWI3NTktNGJiYy04Mjc1LTJhMmQzMjY0MTgwNFwvZDF0ZHYydy0yOTdlNzlmMC1jZTYyLTQ0OGItYjgyMC0xMTgxNTFiOTYxZWEuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.fssawJH9IUAZ2Kt9GkiENgexp41Dk5LrNdoYGeYY2bE" width="">
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/e6eab934-b759-4bbc-8275-2a2d32641804/d1tdv74-89605594-196f-41ba-a7ed-3d69524b4289.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2U2ZWFiOTM0LWI3NTktNGJiYy04Mjc1LTJhMmQzMjY0MTgwNFwvZDF0ZHY3NC04OTYwNTU5NC0xOTZmLTQxYmEtYTdlZC0zZDY5NTI0YjQyODkuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.Kq7i4q94yb7PibNAbKCJL8Rq6MCmEMWr5XR1geXS4Ok" width="">
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/e6eab934-b759-4bbc-8275-2a2d32641804/d1tdv98-46dbea6f-003c-403b-a0b5-474905422d73.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2U2ZWFiOTM0LWI3NTktNGJiYy04Mjc1LTJhMmQzMjY0MTgwNFwvZDF0ZHY5OC00NmRiZWE2Zi0wMDNjLTQwM2ItYTBiNS00NzQ5MDU0MjJkNzMuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.qCy5oXZNvXTMAyp5JgLA2-78RGJ-w4B5EwUpm_JsZZI" width="">
+<img src="/images/corncat.gif" class="freezeframe" width="">
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/259e49bb-cf3f-4324-a2da-0c70c0b771dd/d2721yl-c51c1363-e0d2-43ed-869a-9ba7f24f8bd3.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzI1OWU0OWJiLWNmM2YtNDMyNC1hMmRhLTBjNzBjMGI3NzFkZFwvZDI3MjF5bC1jNTFjMTM2My1lMGQyLTQzZWQtODY5YS05YmE3ZjI0ZjhiZDMucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.UQEHkRXoVdO1P5eZ8OHEXt1hm3eMc5txN4_r6oHa_Hc" width="">
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/74037890-f83c-468f-83cf-33aa7bea7e7f/d6inxwk-29aceb11-cab0-4220-9008-7f66ca3694f4.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzc0MDM3ODkwLWY4M2MtNDY4Zi04M2NmLTMzYWE3YmVhN2U3ZlwvZDZpbnh3ay0yOWFjZWIxMS1jYWIwLTQyMjAtOTAwOC03ZjY2Y2EzNjk0ZjQucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.0pSCEFyOUTjCYmSdsqS-DS693vZB3H2Ins7yVvPMNHE" width="">
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/74037890-f83c-468f-83cf-33aa7bea7e7f/d6gccsn-fc29c555-65d1-42fd-9c1c-e6120c800386.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzc0MDM3ODkwLWY4M2MtNDY4Zi04M2NmLTMzYWE3YmVhN2U3ZlwvZDZnY2Nzbi1mYzI5YzU1NS02NWQxLTQyZmQtOWMxYy1lNjEyMGM4MDAzODYucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.YysTxKt8uroCe92-Phb2FJ1jIjUBG0QKrgmp3w0KouU" width="">
+<img src="https://f2.toyhou.se/file/f2-toyhou-se/images/60551119_SYXgRtsWmhhxSfm.png" width="">
+<img src="https://f2.toyhou.se/file/f2-toyhou-se/images/64891287_Ufnk9T1SF7XvvG5.gif" class="freezeframe" width="">
+<img src="https://f2.toyhou.se/file/f2-toyhou-se/images/60016255_LzO9BbrTqz3WTrL.png" width="">
+<img src="images/jerma1.gif" class="freezeframe" width="">
+<img src="images/jerma2.gif" class="freezeframe" width="">
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/2fefa4cf-5613-41bd-b7ec-258eaadcd309/d868rii-6e2a7478-628b-4021-9493-db50ef348793.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzJmZWZhNGNmLTU2MTMtNDFiZC1iN2VjLTI1OGVhYWRjZDMwOVwvZDg2OHJpaS02ZTJhNzQ3OC02MjhiLTQwMjEtOTQ5My1kYjUwZWYzNDg3OTMucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.qfnUg3LHiAk4LQyr56vRKIPiJBCtJn0Gm29vYXsmj_k" width="">
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/082ec0e2-8d6b-4b0e-a99b-465cee8f17f8/dc4dmvq-4b6c2dec-6435-43e0-8e45-0a6dd852d583.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzA4MmVjMGUyLThkNmItNGIwZS1hOTliLTQ2NWNlZThmMTdmOFwvZGM0ZG12cS00YjZjMmRlYy02NDM1LTQzZTAtOGU0NS0wYTZkZDg1MmQ1ODMucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.icbNysLukaNSBhzKZcFwCYigX400FU5QX8_WjJkrVNg" width="">
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/517d2f46-72e8-498b-9c8a-ff13ab48234f/d26vobl-d97140f8-d951-4af5-a726-deaf92fc741c.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzUxN2QyZjQ2LTcyZTgtNDk4Yi05YzhhLWZmMTNhYjQ4MjM0ZlwvZDI2dm9ibC1kOTcxNDBmOC1kOTUxLTRhZjUtYTcyNi1kZWFmOTJmYzc0MWMuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.cpeFs16QLKwxL0ph7OuEFQneO8wAmcHXIdWqW7XjvCc" width="">
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/9593649b-9956-4a58-a332-85a193ef7f00/d9qvmuo-1899c622-0c6f-4b9f-b25f-a3b0b9589539.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzk1OTM2NDliLTk5NTYtNGE1OC1hMzMyLTg1YTE5M2VmN2YwMFwvZDlxdm11by0xODk5YzYyMi0wYzZmLTRiOWYtYjI1Zi1hM2IwYjk1ODk1MzkucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.beDhg0T15PtRUcK4lAPng27vcUS3zho043fxHu0r364" width="">
+<a href="https://otherkin.wiki/wiki/Otherhearted"><img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/9593649b-9956-4a58-a332-85a193ef7f00/d9lbxwq-dbef1840-7f03-4496-a171-b67cea37fc4b.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzk1OTM2NDliLTk5NTYtNGE1OC1hMzMyLTg1YTE5M2VmN2YwMFwvZDlsYnh3cS1kYmVmMTg0MC03ZjAzLTQ0OTYtYTE3MS1iNjdjZWEzN2ZjNGIucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.tU4ibTX01xnDXZbm-LvmhV36suoFPpxp6LV9ox8gQ6Q" width=""></a>
+<img src="https://f2.toyhou.se/file/f2-toyhou-se/thumbnails/49445182_utq.png" width="">
+<img src="images/616.gif" class="freezeframe"width="">
+<img src="images/jerma1.png" width="">
+<img src="images/jerma2.png" width="">
+<img src="images/daleks.gif" class="freezeframe" width="">
+<img src="images/nighttime.gif" class="freezeframe" width="">
+
+<img src="images/continue_anyway.jpg" width="">
+<img src="images/pixelcity.png" width="">
+<img src="images/ceilingcat.gif" width="">
+<img src="images/reanimator.png" width="">
+<img src="images/mlp.gif" class="freezeframe" width="">
+<img src="images/derpy.png" width="">
+<img src="images/drhooves.png" width="">
+<img src="images/nmm.png" width="">
+<img src="images/nightmaremoon.gif" class="freezeframe" width="">
+<img src="images/princessluna.png" width="">
+<img src="images/sunsetshimmer.png" width="">
+<img src="images/discord.png" width="">
+<img src="images/3dsowner.png" width="">
+<img src="images/htmlsucks.png" width="">
+<img src="images/man.png" width="">
+<img src="images/tbh.png" width="">
+<img src="images/realitykillsdreams.png" width="">
+<img src="images/yourownwebsite.png" width="">
+<img src="images/perryrules.png" width="">
+<img src="images/pentagrams.png" width="">
+<img src="images/starrystamp.gif" class="freezeframe" width="">
+<img src="images/phoenixcoffee.gif" class="freezeframe" width="">
+<img src="images/digitalartists.gif" class="freezeframe" width="">
+<img src="images/kittycatdance.gif" class="freezeframe" width="">
+<img src="images/magic.gif" class="freezeframe" width="">
+<img class="freezeframe" src="https://feelingmachine.moe/stamps/badapple.gif" width="">
+    <img src="https://i.postimg.cc/15XNx5KD/Y9RrQLz.png">
+    <img class="freezeframe" src="https://pixelsafari.neocities.org/stamps/catwalk.gif">
+<img class="freezeframe" src="/images/wii.png">
+    <img class="freezeframe" src="https://64.media.tumblr.com/fe2c2f3ca2c690ea71ff6b6cdc3f8cdd/79d8b316934d24c3-3c/s100x200/2a18a216e722c6b17bf2d53af653186f606bb3e9.gifv">
+    <img class="freezeframe" src="https://64.media.tumblr.com/22231001377df9e4d85a5fe93fec4c86/79d8b316934d24c3-14/s100x200/ca1b01f8cb4f9f48c2cdbab75fdf1f450f00309c.gifv">
+    <img class="freezeframe" src="https://64.media.tumblr.com/0a31c2e1d2bcc5df2eb98e31eb2110b1/79d8b316934d24c3-5d/s100x200/4b7c20c8acdb2df5bf732f5200d06af94ae21fbe.gifv">
+    <img class="freezeframe" src="https://64.media.tumblr.com/927c992ab3abb7a390d8c4ce7c12eceb/8c49db604b0f3002-b5/s100x200/4be5f9cf95ee416dd2f7e89dd3cea35274ae73da.pnj">
+    
+    
+
+<br>
+
+
+<br><br></p>
+<hr class="dotted"><br>
+
+
+<p align="center"> 
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/c350de11-8c52-4be4-bc28-608bfd99bd53/d8c9d2l-7b888738-6b81-4e1a-b6fa-b471f066a6ee.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2MzNTBkZTExLThjNTItNGJlNC1iYzI4LTYwOGJmZDk5YmQ1M1wvZDhjOWQybC03Yjg4ODczOC02YjgxLTRlMWEtYjZmYS1iNDcxZjA2NmE2ZWUucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.JKkOMnF8omdFGx1J4eqntSMA1gqVTxiN2T6wcl-JB-U" width="">
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/c350de11-8c52-4be4-bc28-608bfd99bd53/d81x6s6-e1e8f44d-3476-4269-8574-b7b604263c7d.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2MzNTBkZTExLThjNTItNGJlNC1iYzI4LTYwOGJmZDk5YmQ1M1wvZDgxeDZzNi1lMWU4ZjQ0ZC0zNDc2LTQyNjktODU3NC1iN2I2MDQyNjNjN2QucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.8FJMDLdpA00YYUeDBBXQ47NOriENexamOHmcTPH3zrk" width="">
+<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/259e49bb-cf3f-4324-a2da-0c70c0b771dd/d1tapip-b8301077-f415-4039-9783-4810630c747d.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzI1OWU0OWJiLWNmM2YtNDMyNC1hMmRhLTBjNzBjMGI3NzFkZFwvZDF0YXBpcC1iODMwMTA3Ny1mNDE1LTQwMzktOTc4My00ODEwNjMwYzc0N2QuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.nd-Wn5tTonpl4yCxJujB6bxe3sxDOqNHb8NJvZ3rYHk" width="">
+<img src="https://f2.toyhou.se/file/f2-toyhou-se/images/65168119_f30QJTDoBe1NoDR.png" width="25%">
+    <a href="https://www.deviantart.com/yatsuos/art/my-father-died-725960604"><img class="freezeframe" src="/images/ryo.gif" width="80px;"></a>
+    <img class="freezeframe" src="/images/derpypixel.gif">
+    <img class="freezeframe" src="/images/doc.gif">
+    <img class="freezeframe" src="/images/minuette.gif">
+    <img class="freezeframe" src="/images/hitch.gif">
+    <img class="freezeframe" src="/images/sunburst.gif">
+    <img class="freezeframe" src="/images/sunset.gif">
+    <img class="freezeframe" src="/images/twi.gif">    
+    <img class="freezeframe" src="/images/aj.gif">
+    <img class="freezeframe" width="76px;" src="/images/cheese.gif">
+    
+    <img class="freezeframe" src="/images/nmmpixel.gif">
+    <img class="freezeframe" src="/images/lunapixel.gif"><br><br><br>
+<img src="https://f2.toyhou.se/file/f2-toyhou-se/images/51804084_zhWDqhgrernJ4LQ.png" width="300"><br><br><br>
+    
+    
+<img class="freezeframe" src="/images/peace.gif">
+<img class="freezeframe" src="/images/kirbywalk.gif">
+<img class="freezeframe" src="/images/dvd.gif" width="">
+<img class="freezeframe" src="https://feelingmachine.moe/blinkies/stillyou.gif" width="">
+<img class="freezeframe" src="/images/taurus-sun.gif" width="">
+<img class="freezeframe" src="/images/cap-moon.gif" width="">
+<img class="freezeframe" src="/images/scorpio-asc.gif" width="">
+<img class="freezeframe" src="/images/jermablinkie.gif" width="">
+<img class="freezeframe" src="/images/moonbeamsandstardust.gif" width="">
+<img class="freezeframe" src="https://feelingmachine.moe/blinkies/spiritual.gif" width="">
+<img class="freezeframe" src="https://64.media.tumblr.com/66c0568161fa1bce76c76a6afa32e05e/b0bb00562d27c377-ee/s250x400/45880d8a40c53611c5acaeff711ba0bc55d6a3d4.gifv" width="">
+<img class="freezeframe" src="https://i.postimg.cc/hPN54N19/theEeper.gif" width="">
+<img class="freezeframe" src="https://i.imgur.com/ixRooVg.gif" width="">
+<img class="freezeframe" src="https://i.imgur.com/6QTJwO4.gif" width="">
+<img class="freezeframe" src="/images/tardigrade.gif" width="">
+<img class="freezeframe" src="/images/capitalismkills.gif" width="">
+<img class="freezeframe" src="/images/acab.gif" width="">
+<img class="freezeframe" src="/images/destroythestate.gif" width="">
+<img class="freezeframe" src="/images/legalize.gif" width="">
+<img class="freezeframe" src="/images/pinkipepie.gif" width="">
+<img class="freezeframe" src="/images/abolishprisons.gif" width="">
+<img class="freezeframe" src="https://c.tenor.com/CA3BGdEMfDQAAAAC/tenor.gif">  
+<img class="freezeframe" src="https://i.postimg.cc/sxhPfwRC/yLbfrPs.gif">
+<img class="freezeframe" src="https://i.postimg.cc/6pBypyzy/QfOXeeC.gif">
+    <img class="freezeframe" src="https://i.postimg.cc/j5sNRhwd/yShlXq3.gif">
+    <img class="freezeframe" src="https://i.postimg.cc/T37BVkxB/q1ELPmb.gif">
+    <img class="freezeframe" src="https://graphic.neocities.org/tumblr_o0gs5nuYjC1tfhjhgo1_250.gif">
+  <a href="https://www.youtube.com/watch?v=o84vJH19toI"><img class="FREEZEFRAME" src="https://64.media.tumblr.com/a5b6d35bc8b1c89e64033355ccba4b79/b4f54c7f92bc9f3b-f0/s250x400/c0671326c862e8c59b6bfd42252f757be1aeef57.gif"></a>
+    <img class="freezeframe" src="https://feelingmachine.moe/blinkies/flatfuck.gif">
+    <img class="freezeframe" src="https://i.imgur.com/Vf0Q61U.gif">
+    <img class="freezeframe" src="https://64.media.tumblr.com/62870f259f2060cfce689683114c20f3/bad6482301820538-4c/s250x400/cabdb7c3ecb268cd493f2544d14288ff589d819f.gifv">
+     <img class="freezeframe" src="https://64.media.tumblr.com/d1ecda29e92ab9ff67d5b7cdea7568ca/bad6482301820538-a1/s250x400/234c844342b577bc8370e0de7e8b8782258297e0.gifv">
+     <img class="freezeframe" src="https://64.media.tumblr.com/1978b91821556859917890e131a14751/bad6482301820538-dd/s250x400/dad5ee768c4dd743c4877b98fd9c5d330ff28f8c.gifv">
+     <img class="freezeframe" src="https://64.media.tumblr.com/515e5d2206b39dfd13658f4ce9b186e3/bad6482301820538-ff/s250x400/dba5539c4d1dd91096bd6e09286f7b3974d1d900.gifv">
+     <img class="freezeframe" src="https://64.media.tumblr.com/492329f7ab36b11ba2c8636f33d7c587/bad6482301820538-65/s250x400/325719a46fefb1897c2e206ac4e4b362fd0ce5fa.gifv">
+     <img class="freezeframe" src="https://64.media.tumblr.com/78cce8e1308960b45f6878a1fb85e788/2bacbe891b14f4e5-2a/s250x400/3b0515a42cc39781727c3fae4c0a74b1be03a3d8.gifv">
+    <img class="freezeframe" src="https://i.postimg.cc/gkkXpNTB/4rzwUBm.gif">
+     <img class="freezeframe" src="https://64.media.tumblr.com/b5a179102e7fec093963effcf63f994c/161f256ae5284829-3b/s250x400/ef3d54863ad34399ef79e1b4112af2cf0c9d2d46.gifv">
+     <img class="freezeframe" src="https://64.media.tumblr.com/4f9820952eb033e8a8f24755698d719b/34ba2b29a9371198-a8/s250x400/a8e45d56f25ac276532a6d94fbffc3343d35b979.gifv">
+    <img class="freezeframe" src="https://64.media.tumblr.com/5b463708be8080633d2f930ef39929c9/f4c6470f26b18eb7-40/s250x400/956b6421b3fe183035f0b2ae7dcaf0ae5f4e1e71.gifv">
+    <img class="freezeframe" src="https://64.media.tumblr.com/d174f36720b74d0ee5459e7decb47aab/3ea27de72895d177-50/s250x400/a84f3436ef0568a75b0027f7d7d4564a412543a2.gifv">
+    <img class="freezeframe" src="https://64.media.tumblr.com/8d11b0fd8282e355df5583195d65c73e/83b700c891cd181e-7b/s250x400/0d025dc367e56663f6ad2e4fd0ca209805b589cb.gifv">
+    <img class="freezeframe" src="https://64.media.tumblr.com/a4e1f92fcfdc89dd482b3f57ac251bd3/e307992e94ba0919-04/s250x400/46d9942692d73a7634b9d94fa50e9159e2b44ff5.gifv">
+    <img class="freezeframe" src="https://64.media.tumblr.com/65dacc8536f382f35eb3d41d056ddcb9/e307992e94ba0919-29/s250x400/04e0762dc248ac74670e4a1678e3ff651cfdab6d.gifv">
+    <img class="freezeframe" style="width:150px;" src="https://64.media.tumblr.com/162b6b3c8996dca1dd37c65d8d2c35db/ee5fc417313dd853-a2/s400x600/ba5da6c11b4c49f9df4cf8ef912d196f3ef1f97a.gifv">
+     <img class="freezeframe" src="https://64.media.tumblr.com/b79127e4019e36426ba163153625b323/7df949084f9e78be-cc/s250x400/2f098329cc8eb6dfff730ae9f724fc584d9659ac.gifv">
+    <img class="freezeframe" style="width:150px;" src="https://64.media.tumblr.com/de129f56314ba7465ea4cc16374a8723/53b28a880a29cd42-4d/s250x400/f771e840964c4efd3848d28d8c57436d690afd19.gifv">
+     <img class="freezeframe" style="width:150px;" src="https://64.media.tumblr.com/b87696a981aa332134bf166dea2fe534/37901a7869227e54-c8/s250x400/75a4076df057046c683290abaa91ef3640ff5968.gifv">
+    
+    <br><br>
+    
+    <div style="margin-top: 30px; text-align: center;">
+    <a href="https://www.tumblr.com/jenderenvy985/723402655026774016?source=share">
+    <img class="freezeframe" style="width:150px;" src="https://64.media.tumblr.com/6146d975845adabf0ef5638d1e0e3b95/0b90e7557aebb4c2-ba/s640x960/dfb7ce90db36965938c82f8b19eff59ef7525777.gifv">
+ <img class="freezeframe" style="width:150px;" src="https://64.media.tumblr.com/8252884fd4e2c9ecd1687be96f17c005/0b90e7557aebb4c2-19/s640x960/57ac41bfc3d732068c5cbb2d76fbbbf16586e4a6.gifv">
+     <img class="freezeframe" style="width:150px;" src="https://64.media.tumblr.com/a3dd669e93c199d9a17e7b3dd1e1a420/0b90e7557aebb4c2-0e/s640x960/31e4a7b4a4b1b10258444d9bb1bdae47a0f2d251.gifv">
+     <img class="freezeframe" style="width:150px;" src="https://64.media.tumblr.com/85018b5afb28d8756e8b2326a9bcb0f9/0b90e7557aebb4c2-e5/s640x960/4d5de3be86b7920bd73f8170c5908f80b7561fce.gifv">
+     <img class="freezeframe" style="width:150px;" src="https://64.media.tumblr.com/c75d82695210f98126b24a82ba8972d3/0b90e7557aebb4c2-0d/s640x960/a3da0cd7125467834f87fdb51c1106280f62c84e.gifv">
+     <img class="freezeframe" style="width:150px;" src="https://64.media.tumblr.com/19d29824b0b5cddcc7a0dcf2b20a87c0/0b90e7557aebb4c2-f2/s640x960/803907a8141fe00c5c9955305bdaabc3c3823569.gifv">
+     <img class="freezeframe" style="width:150px;" src="https://64.media.tumblr.com/ba643b253f6d6df99d06886db6da3444/0b90e7557aebb4c2-ac/s640x960/da95477403af79eb92fba0f9aaf61cfde73d9f4c.gifv">
+     <img class="freezeframe" style="width:150px;" src="https://64.media.tumblr.com/e3d6bb6aac1f1a611cfa299dbccd4110/0b90e7557aebb4c2-a4/s640x960/29115c36132edbc57f3b90d9cb0be159461e22e7.gifv">
+     <img class="freezeframe" style="width:150px;" src="https://64.media.tumblr.com/b9311d29360f6b99e225221adfa70284/0b90e7557aebb4c2-80/s640x960/dacbae6de0c272e9520b930b75737e0d22f90ed0.gifv">
+     <img class="freezeframe" style="width:150px;" src="https://64.media.tumblr.com/3974cd1fe97b487f221f03a2e84ba3d6/0b90e7557aebb4c2-43/s640x960/7f7d2b363a8068088a66ae987281a539703eebe7.gifv">
+     <img class="freezeframe" style="width:150px;" src="https://64.media.tumblr.com/553e3bd66110e05b6fffa8399f14643f/0b90e7557aebb4c2-3e/s640x960/8eaede27bd276694639d6f4b3f1844c478599cee.gifv">
+     <img class="freezeframe" style="width:150px;" src="https://64.media.tumblr.com/2fb6ebb7c66e6fe419354ed10af6f4c2/0b90e7557aebb4c2-e5/s640x960/8113ff880613ff927e8d238fa7cccf759f64fbe4.gifv">
+     <img class="freezeframe" style="width:150px;" src="https://64.media.tumblr.com/cec7ed1b4475d6d803f613ea193a86c0/0b90e7557aebb4c2-e7/s640x960/2f7ab33ab3b949310b1c61962518c0d4ae343d04.gifv">
+     <img class="freezeframe" style="width:150px;" src="https://64.media.tumblr.com/820c7c775a8bc3a15b1c9abfd411a32a/0b90e7557aebb4c2-3c/s640x960/7770c2642723f80606c7463cfcc7e0ea5b3ac679.gifv">
+     <img class="freezeframe" style="width:150px;" src="https://64.media.tumblr.com/66593d46584074880720f5852e09def0/0b90e7557aebb4c2-5b/s640x960/2879ba306f23ef25cc630aa8ebf09dfbd014dac3.gifv">
+     <img class="freezeframe" style="width:150px;" src="https://64.media.tumblr.com/d06e74c4c6751dc8816a93b9ab326d52/0b90e7557aebb4c2-26/s640x960/ec3ed844472e8a5ff00c04195523b432d455358f.gifv">
+     <img class="freezeframe" style="width:150px;" src="https://64.media.tumblr.com/13afba3a787ac74b7e5946a62476d673/0b90e7557aebb4c2-e5/s640x960/f08b592e907a4c7ec645d92d1ce6e23bca602729.gifv">
+     <img class="freezeframe" style="width:150px;" src="https://64.media.tumblr.com/70d871296565b54a1ede44197b1fe2e8/0b90e7557aebb4c2-44/s640x960/071e38a1a14d314386a6ea80e61b7fe9dc9e4212.gifv">
+     <img class="freezeframe" style="width:150px;" src="https://64.media.tumblr.com/68a914d12832767be1a059760c7baf08/0b90e7557aebb4c2-0d/s640x960/0ecc9715f7fc1ef4bdbb1b15ad62899401b29b1b.gifv">
+    <img class="freezeframe" style="width:150px;" src="https://64.media.tumblr.com/0a3a043151c564008a625d696e99cc81/0b90e7557aebb4c2-e3/s640x960/e42d7f79fc484892fb85f213880af84ad04a316c.gifv">
+     <img class="freezeframe" style="width:150px;" src="https://64.media.tumblr.com/b004c42fdfde38a0510bd45a0790c85e/0b90e7557aebb4c2-3b/s640x960/ebaaa993fe15a7c72edfb89562aaa70b74f091dc.gifv">
+     <img class="freezeframe" style="width:150px;" src="https://64.media.tumblr.com/636e3533212326d552f996a7abe9329c/0b90e7557aebb4c2-91/s640x960/5027704cb6c3ffcea53ff5f02fd2332dbbdf09dc.gifv">
+     <img class="freezeframe" style="width:150px;" src="https://64.media.tumblr.com/4364caf12fd51b2c5137742650155668/0b90e7557aebb4c2-96/s640x960/be1b158ad6ab2b410fa76e47d503e007a55a111e.gifv">
+     <img class="freezeframe" style="width:150px;" src="https://64.media.tumblr.com/e08b9093ac98fe481d0729f7485c982d/0b90e7557aebb4c2-c8/s640x960/9720afeea3150fc1dec3bfea10d2bfc4452414c5.gifv">
+     <img class="freezeframe" style="width:150px;" src="https://64.media.tumblr.com/429c314cb5bbd607fb812ebd034f3806/0b90e7557aebb4c2-aa/s640x960/e5ded850f2f0e9df8e6ae40703fb2b35de571677.gifv">
+     <img class="freezeframe" style="width:150px;" src="https://64.media.tumblr.com/00bd221f34a1bea3ed5242be2ae46411/0b90e7557aebb4c2-20/s640x960/cdc53ee76c4fa7beacb7c5d629570b6ae0da0739.gifv">
+     <img class="freezeframe" style="width:150px;" src="https://64.media.tumblr.com/bf3f9141ee90e294ab8b3051379b09bf/0b90e7557aebb4c2-fb/s640x960/7e25c9aba14170a6a1d1f5584cf4b98583d8f490.gifv">
+     <img class="freezeframe" style="width:150px;" src="https://64.media.tumblr.com/ca80ac40fab5e1aca658cfc27a11465e/0b90e7557aebb4c2-66/s640x960/ddb6ac9dd6434beed88d1516d97a4a1508ab2363.gifv">
+    </a>
+    </div>
+
+
+
+<br><br></p>
+
+</div>
+
+</div>
+
+<br>
+
+
+
+</div>
+
+
+
+<style>
+.counter{
+ position: relative;
+ left: 45px;
+ bottom: 10px;
+ margin-bottom:
+ 
+}
+
+</style>
+
+
+<div id="footer">
+<p style="text-align:center">
+  Galissia © 2023 - 2024
+</p>
+<p style="text-align:center">
+  Last Updated: 
+  <span id="lastupdate"></span>
+</p>
+<center>
+  <img style="position: relative; right: 55px; top:15px; clear:left;"
+  src="/images/sitebutton.gif">
+</center>
+<div class="counter">
+<!-- FC2 Counter  Starts here -->
+<center><script language="javascript" type="text/javascript" src="//counter1.fc2.com/counter.php?id=39650497&main=1"></script><noscript><img src="//counter1.fc2.com/counter_img.php?id=39650497&main=1" /></noscript></center><br>
+<!-- FC2 Counter  Ends here -->
+</div>
+</div>
+
+</div>
+
+</div>
+
+<div id="credit"><a href="https://repth.neocities.org/index.html">@Repth</a></div>
+
+
+</body>
+
+</html>

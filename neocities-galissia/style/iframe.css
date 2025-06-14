@@ -1,0 +1,174 @@
+
+* {cursor: url(https://cur.cursors-4u.net/nature/nat-10/nat996.cur), auto !important;} 
+
+        
+        
+     ul{
+  list-style-image: url('https://64.media.tumblr.com/4859e9933e910e5b2b14011dfb60a4f6/tumblr_inline_p7gi26hl0i1qfc9y0_75sq.gifv');
+}
+        
+        
+        
+        
+        
+ 
+        
+        
+body{
+background-color: #ECFAFF;
+font-family: 'Elmono', sans-serif;
+    overflow-x: hidden;
+}
+
+#container{
+display: flex;
+justify-content: center;
+align-items: center;
+width: 1000px;
+margin: 0 auto;
+border: 1px solid #6351C6;
+padding: 3px;
+    overflow-x: hidden;
+}
+
+#box{
+width: 1000px;
+background-color: #ECFAFF;
+color: #000;
+border: 1px solid #6351C6;
+    overflow-x: hidden;
+}
+
+#header{
+margin-bottom: 10px;
+padding: 10px;
+border-bottom: 1px solid #6351C6;
+background-image: linear-gradient(to right, #6351C6, #E3BFFF);
+color: #fff;
+letter-spacing: 3px;
+}
+
+#header h1{
+margin: 0px;
+}
+
+#side{
+float: left;
+width: 225px;
+padding: 0px 0px 5px 10px;
+overflow: hidden;
+}
+
+.sidebox{
+border: 1px solid #6351C6;
+margin: 0px 0px 5px 0px;
+}
+
+
+.sidecontent{
+padding: 0px 0px 0px 5px;
+color: #6e5057;
+font-size: 17px;
+letter-spacing: 1px;
+overflow-y: auto;
+overflow-x: hidden;
+max-height: 275px;
+}
+
+.sidecontent ul, li{
+margin: 0px;
+list-style-type: none;
+padding-left: 0px;
+}
+mark {
+  background-color: rgba(119, 93, 255, 0.25);
+}
+a{
+text-decoration: none;
+color: #6351C6;
+}
+
+a:visited{
+color: #6351C6;
+}
+
+a:hover{
+text-shadow: 0px 0px 2px #78beff;
+}
+
+#scrollcontainer{
+padding: 5px;
+overflow: scroll;
+overflow-x: hidden;
+overflow-y: auto;
+}
+
+#webrings{
+padding: 5px;
+overflow-x: hidden;
+overflow-y: auto;
+max-height: 200px;
+}
+
+
+
+#main {
+    float: left;
+    width: 700px;
+    overflow: hidden;
+    padding: 0px 0px 0px 0px;
+}
+
+.introblurb{
+text-indent: 25px;
+}
+.mainboxes{
+border: 1px solid #6351C6;
+padding: 0px;
+margin: 0px 0px 5px 0px;
+    overflow-x:hidden;
+}
+
+
+.subheader{
+background-image: linear-gradient(to right, #6351C6, #E3BFFF);
+border-bottom: 1px solid #6351C6;
+padding: 3px;
+color: #fff;
+letter-spacing: 3px;
+}
+
+.subheader h3{
+margin: 0px;
+}
+
+.mainboxescontent{
+padding: 0px 15px 0px 15px;
+font-size: 17px;
+        color: #6e5057;
+}
+
+
+
+#footer p{
+margin: 0px;
+}
+
+::-webkit-scrollbar{
+width: 8px; 
+}
+    
+::-webkit-scrollbar-track{
+background-color: #ECFAFF;
+}
+
+::-webkit-scrollbar-thumb{
+background-color: #6351C6;  
+}
+
+#credit{
+font-size: 12px;
+position: fixed;
+bottom: 0;
+right: 0;
+}

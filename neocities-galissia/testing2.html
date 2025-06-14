@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  
+            <link rel="stylesheet" href="https://magical-ring.neocities.org/ring-codes/magical-ring-simple.css">
+          
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gal's Corner</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.cdnfonts.com/css/elmono-2" rel="stylesheet">
+         <link rel="shortcut icon" type="image/x-icon" href="/favicon.png">       
+<style type="text/css">* {cursor: url(https://cur.cursors-4u.net/nature/nat-10/nat996.cur), auto !important;}</style><a href="https://www.cursors-4u.com/cursor/2011/12/29/tiny-star.html" target="_blank" title="Tiny Star"><img src="https://cur.cursors-4u.net/cursor.png" border="0" alt="Tiny Star" style="position:absolute; top: 0px; right: 0px;" /></a>
+ <script type="text/javascript">
+// <![CDATA[
+var colour="#ffffff"; // in addition to "random" can be set to any valid colour eg "#f0f" or "red"
+var sparkles=50;
+
+/****************************
+*  Tinkerbell Magic Sparkle *
+*(c)2005-13 mf2fm web-design*
+*  http://www.mf2fm.com/rv  *
+* DON'T EDIT BELOW THIS BOX *
+****************************/
+var x=ox=400;
+var y=oy=300;
+var swide=800;
+var shigh=600;
+var sleft=sdown=0;
+var tiny=new Array();
+var star=new Array();
+var starv=new Array();
+var starx=new Array();
+var stary=new Array();
+var tinyx=new Array();
+var tinyy=new Array();
+var tinyv=new Array();
+
+window.onload=function() { if (document.getElementById) {
+  var i, rats, rlef, rdow;
+  for (var i=0; i<sparkles; i++) {
+    var rats=createDiv(3, 3);
+    rats.style.visibility="hidden";
+    rats.style.zIndex="999";
+    document.body.appendChild(tiny[i]=rats);
+    starv[i]=0;
+    tinyv[i]=0;
+    var rats=createDiv(5, 5);
+    rats.style.backgroundColor="transparent";
+    rats.style.visibility="hidden";
+    rats.style.zIndex="999";
+    var rlef=createDiv(1, 5);
+    var rdow=createDiv(5, 1);
+    rats.appendChild(rlef);
+    rats.appendChild(rdow);
+    rlef.style.top="2px";
+    rlef.style.left="0px";
+    rdow.style.top="0px";
+    rdow.style.left="2px";
+    document.body.appendChild(star[i]=rats);
+  }
+  set_width();
+  sparkle();
+}}
+
+function sparkle() {
+  var c;
+  if (Math.abs(x-ox)>1 || Math.abs(y-oy)>1) {
+    ox=x;
+    oy=y;
+    for (c=0; c<sparkles; c++) if (!starv[c]) {
+      star[c].style.left=(starx[c]=x)+"px";
+      star[c].style.top=(stary[c]=y+1)+"px";
+      star[c].style.clip="rect(0px, 5px, 5px, 0px)";
+      star[c].childNodes[0].style.backgroundColor=star[c].childNodes[1].style.backgroundColor=(colour=="random")?newColour():colour;
+      star[c].style.visibility="visible";
+      starv[c]=50;
+      break;
+    }
+  }
+  for (c=0; c<sparkles; c++) {
+    if (starv[c]) update_star(c);
+    if (tinyv[c]) update_tiny(c);
+  }
+  setTimeout("sparkle()", 40);
+}
+
+function update_star(i) {
+  if (--starv[i]==25) star[i].style.clip="rect(1px, 4px, 4px, 1px)";
+  if (starv[i]) {
+    stary[i]+=1+Math.random()*3;
+    starx[i]+=(i%5-2)/5;
+    if (stary[i]<shigh+sdown) {
+      star[i].style.top=stary[i]+"px";
+      star[i].style.left=starx[i]+"px";
+    }
+    else {
+      star[i].style.visibility="hidden";
+      starv[i]=0;
+      return;
+    }
+  }
+  else {
+    tinyv[i]=50;
+    tiny[i].style.top=(tinyy[i]=stary[i])+"px";
+    tiny[i].style.left=(tinyx[i]=starx[i])+"px";
+    tiny[i].style.width="2px";
+    tiny[i].style.height="2px";
+    tiny[i].style.backgroundColor=star[i].childNodes[0].style.backgroundColor;
+    star[i].style.visibility="hidden";
+    tiny[i].style.visibility="visible"
+  }
+}
+
+function update_tiny(i) {
+  if (--tinyv[i]==25) {
+    tiny[i].style.width="1px";
+    tiny[i].style.height="1px";
+  }
+  if (tinyv[i]) {
+    tinyy[i]+=1+Math.random()*3;
+    tinyx[i]+=(i%5-2)/5;
+    if (tinyy[i]<shigh+sdown) {
+      tiny[i].style.top=tinyy[i]+"px";
+      tiny[i].style.left=tinyx[i]+"px";
+    }
+    else {
+      tiny[i].style.visibility="hidden";
+      tinyv[i]=0;
+      return;
+    }
+  }
+  else tiny[i].style.visibility="hidden";
+}
+
+document.onmousemove=mouse;
+function mouse(e) {
+  if (e) {
+    y=e.pageY;
+    x=e.pageX;
+  }
+  else {
+    set_scroll();
+    y=event.y+sdown;
+    x=event.x+sleft;
+  }
+}
+
+window.onscroll=set_scroll;
+function set_scroll() {
+  if (typeof(self.pageYOffset)=='number') {
+    sdown=self.pageYOffset;
+    sleft=self.pageXOffset;
+  }
+  else if (document.body && (document.body.scrollTop || document.body.scrollLeft)) {
+    sdown=document.body.scrollTop;
+    sleft=document.body.scrollLeft;
+  }
+  else if (document.documentElement && (document.documentElement.scrollTop || document.documentElement.scrollLeft)) {
+    sleft=document.documentElement.scrollLeft;
+    sdown=document.documentElement.scrollTop;
+  }
+  else {
+    sdown=0;
+    sleft=0;
+  }
+}
+
+window.onresize=set_width;
+function set_width() {
+  var sw_min=999999;
+  var sh_min=999999;
+  if (document.documentElement && document.documentElement.clientWidth) {
+    if (document.documentElement.clientWidth>0) sw_min=document.documentElement.clientWidth;
+    if (document.documentElement.clientHeight>0) sh_min=document.documentElement.clientHeight;
+  }
+  if (typeof(self.innerWidth)=='number' && self.innerWidth) {
+    if (self.innerWidth>0 && self.innerWidth<sw_min) sw_min=self.innerWidth;
+    if (self.innerHeight>0 && self.innerHeight<sh_min) sh_min=self.innerHeight;
+  }
+  if (document.body.clientWidth) {
+    if (document.body.clientWidth>0 && document.body.clientWidth<sw_min) sw_min=document.body.clientWidth;
+    if (document.body.clientHeight>0 && document.body.clientHeight<sh_min) sh_min=document.body.clientHeight;
+  }
+  if (sw_min==999999 || sh_min==999999) {
+    sw_min=800;
+    sh_min=600;
+  }
+  swide=sw_min;
+  shigh=sh_min;
+}
+
+function createDiv(height, width) {
+  var div=document.createElement("div");
+  div.style.position="absolute";
+  div.style.height=height+"px";
+  div.style.width=width+"px";
+  div.style.overflow="hidden";
+  return (div);
+}
+
+function newColour() {
+  var c=new Array();
+  c[0]=255;
+  c[1]=Math.floor(Math.random()*256);
+  c[2]=Math.floor(Math.random()*(256-c[1]/2));
+  c.sort(function(){return (0.5 - Math.random());});
+  return ("rgb("+c[0]+", "+c[1]+", "+c[2]+")");
+}
+// ]]>
+</script>
+
+<style>
+.marquee {
+            overflow: hidden;
+            position: relative;
+            left: 2px;
+            align-items: center;
+            justify-content: center;
+            height: 52px;
+            width: 790px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+.marquee {}
+
+        .marquee-inner {
+            display: block;
+            width: 3540px;
+            /* max width of banner */
+            position: absolute;
+            animation: marquee 30s linear infinite;
+            font-size: 0px;
+        }
+
+        .marquee-inner img {
+            margin-right: 1px;
+            margin-left: 1px;
+            margin-top: 1px;
+        }
+
+        .marquee-inner span {
+            float: left;
+            width: 50%;
+            overflow: hidden;
+        }
+
+        @keyframes marquee {
+            0% {
+                left: 0;
+            }
+
+            100% {
+                left: -1404px;
+                /* half of banner width */
+            }
+        }
+        
+        
+    
+        
+
+body{
+background-color: #B7C8F5;
+font-family: 'Elmono', sans-serif;
+}
+
+#container{
+display: flex;
+justify-content: center;
+align-items: center;
+width: 1000px;
+margin: 0 auto;
+border: 1px solid #6351C6;
+padding: 3px;
+}
+
+#box{
+width: 1000px;
+background-color: #ECFAFF;
+color: #000;
+border: 1px solid #6351C6;
+}
+
+#header{
+margin-bottom: 10px;
+padding: 10px;
+border-bottom: 1px solid #6351C6;
+background-image: linear-gradient(to right, #6351C6, #E3BFFF);
+color: #fff;
+letter-spacing: 3px;
+}
+
+#header h1{
+margin: 0px;
+}
+
+#side{
+float: left;
+width: 225px;
+padding: 0px 0px 5px 10px;
+overflow: hidden;
+}
+
+.sidebox{
+border: 1px solid #6351C6;
+margin: 0px 0px 5px 0px;
+}
+
+
+.sidecontent{
+padding: 0px 0px 0px 5px;
+color: #6e5057;
+font-size: 17px;
+letter-spacing: 1px;
+}
+
+.sidecontent ul, li{
+margin: 0px;
+list-style-type: none;
+padding-left: 0px;
+}
+
+a{
+text-decoration: none;
+color: #6351C6;
+}
+
+a:visited{
+color: #6351C6;
+}
+
+a:hover{
+text-shadow: 0px 0px 2px #78beff;
+}
+
+#scrollcontainer{
+padding: 5px;
+overflow: scroll;
+overflow-x: hidden;
+overflow-y: auto;
+}
+
+#webrings{
+padding: 5px;
+overflow: scroll;
+overflow-x: hidden;
+overflow-y: hidden;
+max-height: 200px;
+}
+
+
+
+#main{
+float: left;
+width: 730px;
+overflow: hidden;
+padding: 10px 0px 10px 20px;
+}
+
+.introblurb{
+text-indent: 25px;
+}
+.mainboxes{
+border: 1px solid #6351C6;
+padding: 0px;
+margin: 0px 0px 5px 0px;
+}
+
+
+.subheader{
+background-image: linear-gradient(to right, #6351C6, #E3BFFF);
+border-bottom: 1px solid #6351C6;
+padding: 3px;
+color: #fff;
+letter-spacing: 3px;
+}
+
+.subheader h3{
+margin: 0px;
+}
+
+.mainboxescontent{
+padding: 0px 15px 0px 15px;
+color: #6e5057;
+font-size: 17px;
+}
+
+#footer{
+clear: both;
+padding: 3px;
+border-top: 1px solid #6351C6;
+background-image: linear-gradient(to right, #6351C6, #E3BFFF);
+color: #fff;
+font-size: 14px;
+}
+
+#footer p{
+margin: 0px;
+}
+
+::-webkit-scrollbar{
+width: 8px; 
+}
+    
+::-webkit-scrollbar-track{
+background-color: #ECFAFF;
+}
+
+::-webkit-scrollbar-thumb{
+background-color: #6351C6;  
+}
+
+#credit{
+font-size: 12px;
+position: fixed;
+bottom: 0;
+right: 0;
+}
+#statuscafe {
+    padding: .5em;
+    
+   
+}
+#statuscafe-username {
+    margin-bottom: .5em;
+
+}
+#statuscafe-content {
+    margin: 0 1em 0.5em 1em;
+
+}
+</style>
+<script>
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        var site_data = JSON.parse(this.responseText);
+        var num_arr = site_data.info.views.toString().split("");
+        var num_str = "";
+        for (i = 0; i < num_arr.length; i++) {
+            num_str += num_arr[i];
+            if ( (num_arr.length-1 - i) % 3 == 0 && (num_arr.length-1 - i) != 0 ) {num_str += ",";}
+            var date_str = site_data.info.last_updated;
+            var date_obj = new Date(site_data.info.last_updated);
+var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+document.getElementById("lastupdate").innerHTML = days[date_obj.getDay()] + " " + months[date_obj.getMonth()] + " " + date_obj.getDate() + ", " + date_obj.getFullYear();
+        }
+        document.getElementById("hitcount").innerHTML = num_str;
+    }
+};
+xhttp.open("GET", "https://weirdscifi.ratiosemper.com/neocities.php?sitename=galissia", true);
+xhttp.send();
+</script>
+</head>
+
+<body>
+
+<div id="container">
+
+<div id="box">
+
+<div id="header"><h1 style="text-align:center">☆ Gal's Corner ☆</h1>
+</div>
+
+
+<div id="side">
+
+<div class="sidebox">
+
+<div class="subheader"><h3>Navigate</h3></div>
+
+<div class="sidecontent">
+
+<!-- LINK BOX 1 -->
+
+<ul>
+<li><a href="https://galissia.neocities.org/about">☆ about me!</a></li>
+<li><a href="https://galissia.neocities.org/Interests">☆ Interests</a></li>
+<li><a href="https://galissia.neocities.org/websites">☆ neat links</a></li>
+<li><a href="https://galissia.thoughts.page">☆ blog</a></li>
+<li><a href="https://galissia.neocities.org/changelog">☆ changelog</a></li>
+<li><a href="https://galissia.neocities.org/map">☆ sitemap</a></li>
+<li><a href="https://galissia.neocities.org/index">☆ home</a></li>
+</ul>
+
+<!-- END LINK BOX 1 -->
+
+</div>
+</div>
+
+<div class="sidebox">
+
+<div class="subheader"><h3>Fun Stuff</h3></div>
+
+<div class="sidecontent">
+
+<!-- LINK BOX 2 -->
+
+<li><a href="http://users3.smartgb.com/g/g.php?a=s&i=g36-36095-aa">☆ guestbook</a></li>
+<li><a href="https://galissia.neocities.org/stamps">☆ stamps</a></li>
+<li><a href="https://galissia.neocities.org/toybox">☆ toybox</a></li>
+<li><a href="/friendcodes.html">☆ friend codes</a></li>
+
+<!-- END LINK BOX 2 -->
+
+</div>
+</div>
+
+<div class="sidebox">
+
+<div class="subheader"><h3>☆ status ☆</h3></div>
+
+<div class="sidecontent" id="scrollcontainer">
+
+<div id="scrolly">
+
+<!-- SCROLLBOX CONTENT -->
+
+
+<div id="scrollycontent" style="padding:.5px;">
+<div id="statuscafe"><div id="statuscafe-username"></div><div id="statuscafe-content"></div></div><script src="https://status.cafe/current-status.js?name=galissia" defer></script>
+
+
+<!-- END SCROLLBOX CONTENT -->
+
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="sidebox">
+
+<div class="sidecontent" id="webrings">
+
+<div id="scrolly">
+
+<!-- SCROLLBOX CONTENT -->
+<style>
+.webringsbox {
+            overflow: hidden;
+            position: relative;
+            align-items: center;
+            justify-content: center;
+            height: 225px;
+            width: 225px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+.webringsbox {}
+
+        .webrings-inner {
+            display: block;
+            width: 225px;
+            /* max width of banner */
+            position: absolute;
+            animation: webringsbox 30s linear infinite;
+            font-size: 0px;
+        }
+
+        .webrings-inner img {
+            margin-right: 1px;
+            margin-left: 1px;
+            margin-top: 1px;
+        }
+
+        .webrings-inner span {
+            float: left;
+            width: 50%;
+            overflow: hidden;
+        }
+
+        @keyframes webringsbox {
+            0% {
+                bottom: 0;
+            }
+
+            100% {
+                bottom: 115px;
+                /* half of banner width */
+            }
+        }
+        
+        
+        .webrings-inner:hover {
+          animation-play-state: paused;
+        }
+        
+
+</style>
+
+
+<div id="webrings" style="padding:.5px;">  
+          <center>
+                   
+       <!-- Codes by HTMLcodes.ws -->
+<div class="webringsbox">
+<div class="webring-inner">
+<span>
+<script src="https://autistbh.neocities.org/webring/webringblinkgif.js"></script><ring-114 site="https://AUTISM.neocities.org/"></ring-114><br>
+<div id="bisexualism">
+<script type="text/javascript" src="https://emeowly.github.io/bi/onionring-variables.js" defer></script>
+<script type="text/javascript" src="https://emeowly.github.io/bi/onionring-img-widget.js" defer></script>
+</div><br><tr>
+<td><a href="https://webri.ng/webring/ladiesofthelinks/previous?via=https%3A%2F%2Fgalissia.neocities.org"><img src="images/ladiesofthelink1.gif"></a></td>
+<td><a href="https://ladiesofthe.link/"><img src="images/ladiesofthelink.gif"></a></td>
+<td><a href="https://webri.ng/webring/ladiesofthelinks/next?via=https%3A%2F%2Fgalissia.neocities.org"><img src="images/ladiesofthelink2.gif"></a></td>
+</tr><br><script src="https://autistbh.neocities.org/webring/webringblinkgif.js"></script><ring-114 site="https://galissia.neocities.org/"></ring-114><br>
+          <script src="https://nuthead.neocities.org/ring/ring.js"></script><br>
+<br>
+<div id="autiring">
+<script type="text/javascript" src="https://macaque.moe/autiring/onionring-variables.js"></script>
+<script type="text/javascript" src="https://macaque.moe/autiring/onionring-widget.js"></script>
+</div>
+<br>
+          <a href='https://webring.dinhe.net/prev/https://galissia.neocities.org'>Previous</a> | retronaut webring | 
+<a href='https://webring.dinhe.net/next/https://galissia.neocities.org'>Next</a>
+ <br><div id='magical-ring'>
+            <script type="text/javascript" src="https://magical-ring.neocities.org/js/onionring-variables.js"></script>
+            <script type="text/javascript" src="https://magical-ring.neocities.org/js/onionring-widget.js"></script>
+          </div>    <br><!--START OF SELF INSERT WEBRING-->
+			<div id="selfinsertwebring">
+				<script src="showWebring.js"></script>
+			</div>
+			<!--END OF SELF INSERT WEBRING-->
+			<br><div style="width: 150px; /* <- Set any width you'd like! */">
+  <script src="https://jeith.neocities.org/assets/webring/wii-ring.js"></script>
+  <wii-ring site="https://galissia.neocities.org"></wii-ring>
+</div>
+</span>
+<span>
+<script src="https://autistbh.neocities.org/webring/webringblinkgif.js"></script><ring-114 site="https://AUTISM.neocities.org/"></ring-114><br>
+<div id="bisexualism">
+<script type="text/javascript" src="https://emeowly.github.io/bi/onionring-variables.js" defer></script>
+<script type="text/javascript" src="https://emeowly.github.io/bi/onionring-img-widget.js" defer></script>
+</div><br><tr>
+<td><a href="https://webri.ng/webring/ladiesofthelinks/previous?via=https%3A%2F%2Fgalissia.neocities.org"><img src="images/ladiesofthelink1.gif"></a></td>
+<td><a href="https://ladiesofthe.link/"><img src="images/ladiesofthelink.gif"></a></td>
+<td><a href="https://webri.ng/webring/ladiesofthelinks/next?via=https%3A%2F%2Fgalissia.neocities.org"><img src="images/ladiesofthelink2.gif"></a></td>
+</tr><br><script src="https://autistbh.neocities.org/webring/webringblinkgif.js"></script><ring-114 site="https://galissia.neocities.org/"></ring-114><br>
+          <script src="https://nuthead.neocities.org/ring/ring.js"></script><br>
+<br>
+<div id="autiring">
+<script type="text/javascript" src="https://macaque.moe/autiring/onionring-variables.js"></script>
+<script type="text/javascript" src="https://macaque.moe/autiring/onionring-widget.js"></script>
+</div>
+<br>
+          <a href='https://webring.dinhe.net/prev/https://galissia.neocities.org'>Previous</a> | retronaut webring | 
+<a href='https://webring.dinhe.net/next/https://galissia.neocities.org'>Next</a>
+ <br><div id='magical-ring'>
+            <script type="text/javascript" src="https://magical-ring.neocities.org/js/onionring-variables.js"></script>
+            <script type="text/javascript" src="https://magical-ring.neocities.org/js/onionring-widget.js"></script>
+          </div>    <br><!--START OF SELF INSERT WEBRING-->
+			<div id="selfinsertwebring">
+				<script src="showWebring.js"></script>
+			</div>
+			<!--END OF SELF INSERT WEBRING-->
+			<br><div style="width: 150px; /* <- Set any width you'd like! */">
+  <script src="https://jeith.neocities.org/assets/webring/wii-ring.js"></script>
+  <wii-ring site="https://galissia.neocities.org"></wii-ring>
+</div>
+</span>
+</div>
+</div>
+<!-- END SCROLLBOX CONTENT -->
+
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- END SIDEBOX DIV -->
+
+</div>
+
+<div id="main">
+
+<div class="mainboxes">
+
+<div class="subheader"><h3 style="text-align:center">howdy!!</h3></div>
+
+<div class="mainboxescontent">
+
+<!-- REPLACE CONTENT BELOW WITH YOUR OWN -->
+<div class="introblurb">
+<p style="clear:right;"><img src="https://imgur.com/T06FYhj.gif" width="125px" style="float:left;padding-right:20px;padding-bottom:10px;"><img>Hello hello hello!! welcome to my cozy lil' corner of the internet where I can safely hide away from the rest of society. i made this site because  1) i had the urge to practice some coding, and 2) i wanted to have a space of my own where i can do whatever i want, yknow? plus i saw some really cool neocities sites and i felt like making one too lol</p></div>
+<p> I'm not too sure what to even put on this website, so i suppose i'll just casually add bits and bobs when the ideas come to me. Mostly, this is a self-indulgent internet space, so i don't expect everyone to find anything useful here, but if someone can find something neat and interesting here, or otherwise enjoy my ramblings, that'd be really awesome :)</p>
+<br>
+<h2>if youre seeing this I am currently in the process of ironing out some issues with the home page right this second!! so please excuse any broken code that you may come across when refreshing ^^ </h2>
+ 
+
+
+<!-- END CONTENT -->
+</div>
+</div>
+
+
+<div class="mainboxes">
+
+<div class="subheader"><h3 style="text-align:center">links</h3></div>
+
+<div class="mainboxescontent">
+
+<!-- REPLACE CONTENT BELOW WITH YOUR OWN -->
+<div class="header__inner">
+    <p>&#127911; <span id="song">&#8987;</span></p>
+</div>
+<div class="header__inner">
+    <p><small>latest played song on <a href="https://www.last.fm/user/galissia_" target="_blank">last.fm</a></small> | <small>powered by <a
+                href="https://github.com/biancarosa/lastfm-last-played"
+                target="_blank">@biancarosa/lastfm-last-played</a></small></p>
+                
+</div>
+<script type="text/javascript">
+    let user = 'galissia_';
+    let url = 'https://lastfm-last-played.biancarosa.com.br/' + user + '/latest-song';
+    let song = document.querySelector('#song');
+    fetch(url)
+        .then(function (response) {
+            return response.json()
+        }).then(function (json) {
+            song.innerHTML = json['track']['name'] + ' - ' + json['track']['artist']['#text'];
+        });
+</script>
+
+
+<hr />
+<p style="text-align:center";><a href="https://www.instagram.com/galissia_/"><img src="https://f2.toyhou.se/file/f2-toyhou-se/images/63045566_IHtu1b2VdrU5K0o.png"></a> <a href="https://toyhou.se/Galissia_"><img src="https://f2.toyhou.se/file/f2-toyhou-se/images/63045454_Vkc1TPixHRWJH6f.png"></a> <a href="https://galissia-x.tumblr.com/"><img src="https://f2.toyhou.se/file/f2-toyhou-se/images/63045509_PuGBfem2V66I7Hi.png"></a> <a href="https://twitter.com/galissiaX"><img src="https://f2.toyhou.se/file/f2-toyhou-se/images/63045570_FJ3rS6FkgqWlQi6.png"></a> <a href="https://www.youtube.com/c/Galissia_"><img src="https://f2.toyhou.se/file/f2-toyhou-se/images/63045574_6oQGtwrFBAPiTmG.png"></a> <a href="https://www.deviantart.com/galissiax"><img src="https://f2.toyhou.se/file/f2-toyhou-se/images/63045489_ODjdRL0b8FzyQWF.png"></a>  <a href="https://artfight.net/~Galissia_"><img src="https://f2.toyhou.se/file/f2-toyhou-se/images/63045564_J1nMQ6P2MSEnOFI.png"></a></p>
+
+<!-- END CONTENT -->
+
+</div>
+
+</div>
+
+
+<div class="marquee">
+<div class="marquee-inner">
+<span>
+<img src="images/webdesign.png"><img>
+<img src="images/madewithneo.gif"><img>
+<img src="images/poweredbybob.gif"><img>
+<img src="images/arizona.gif" ><img>
+<img src="images/krisbtn.png" ><img>
+<img src="images/htmlenhanced.gif" ><img>
+<img src="images/neocitiescat.png" ><img>
+<img src="images/ilikecomputer.png" ><img>
+<img src="images/w3schools88x31.gif"><img>
+<img src="images/imaginate.gif"><img>
+<img src="images/webkinz.png"><img>
+<img src="images/ralseismoking.gif"><img>
+<img src="images/windows.gif">
+<img src="images/madeineditor.gif"><img>
+<img src="images/queer.png"><img>
+<img src="images/dream.png" ><img>
+<img src="images/spice.png" ><img>
+<img src="images/steampunk.png" ><img>
+<img src="images/bloom.png" ><img>
+<img src="images/werewolves.png" ><img>
+</span>
+<span>
+<img src="images/webdesign.png"><img>
+<img src="images/madewithneo.gif"><img>
+<img src="images/poweredbybob.gif"><img>
+<img src="images/arizona.gif" ><img>
+<img src="images/krisbtn.png" ><img>
+<img src="images/htmlenhanced.gif" ><img>
+<img src="images/neocitiescat.png" ><img>
+<img src="images/ilikecomputer.png" ><img>
+<img src="images/w3schools88x31.gif"><img>
+<img src="images/imaginate.gif"><img>
+<img src="images/webkinz.png"><img>
+<img src="images/ralseismoking.gif"><img>
+<img src="images/windows.gif">
+<img src="images/madeineditor.gif"><img>
+<img src="images/queer.png"><img>
+<img src="images/dream.png" ><img>
+<img src="images/spice.png" ><img>
+<img src="images/steampunk.png" ><img>
+<img src="images/bloom.png" ><img>
+<img src="images/werewolves.png" ><img>
+</span>
+</div>
+</div>
+
+
+</div>
+
+
+
+
+
+
+<div id="footer"><p style="text-align:center">Galissia © 2023 - 2024</p><p style="text-align:center">Last Updated: <span id="lastupdate"></span></p><br><center><img src="/images/sitebutton.gif"></center></div>
+
+</div>
+
+</div>
+
+<div id="credit"><a href="https://repth.neocities.org/index.html">@Repth</a></div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,196 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap');
+
+body, html {
+	padding: 0;
+	margin: 0;
+	font-size: 13px;
+	background: teal;
+	color: lime;
+	font-family: 'Source Code Pro', monospace;
+	font-size: 12px;
+    overflow: hidden;
+
+}
+#overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url(https://static.doomworld.com/monthly_2019_05/scanlines.png.2859237ac5e64816bb01978e0707b2db.png);
+  z-index: 10000;
+  pointer-events: none; 
+  opacity: 0.2;
+}
+
+img {
+	max-width: 100%;
+}
+
+.page {
+	padding: 24px;
+}
+
+.page h1:first-child {
+	margin-top: 0;
+}
+#winamp-container {
+    width: 280px;
+    height:380px;
+    position: fixed;
+    bottom: 250px;
+    right: 120px;
+    padding: 0;
+    margin: 0;
+    z-index: -1;
+}
+
+.header-image {
+	height: 200px;
+	margin: auto;
+	display: block;
+}
+
+.wrapper {
+	margin: auto;
+	margin-top: 24px;
+	width: 753px;
+}
+
+.menu {
+	text-align: center;
+	margin-bottom: 24px;
+	margin-top: 24px;
+}
+
+.menu a {
+	color: lime;
+}
+
+.main {
+	height: 600px;
+	width: 800px;
+	
+	position: relative;
+}
+
+.main iframe {
+	border: none;
+	border: none;
+	position: absolute;
+	top: 45px;
+	left: 7px;
+	width: 785px;
+	height: 550px;
+}
+
+    
+#ads {
+        display: none;
+    }
+    
+h1, h2, h3, h4, h5 {
+	font-size: 12px;
+}
+
+h1 {
+	border-bottom: 1px solid lime;
+}
+
+h2 {
+	border-bottom: 1px dotted lime;
+}
+
+a {
+	color: red;
+}
+.footbar {
+  position:fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 28px
+  }
+  .appstable {
+      padding: 0;
+      border-spacing: 0;
+      border-collapse: collapse;
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin-left: 10px;
+      margin-top: 10px;
+  }
+  .apps {
+    width: 70px;
+    height: 70px;
+    padding: 10px;
+    margin: 0;
+  }
+  .pony {
+    position: relative;
+    top: 85px;
+  }
+    #ad1 {
+        position: fixed;
+        top: 45px;
+	left: 145px;
+	width: 4000px;
+	height: 500px;
+        z-index:998;
+    }
+    #ad2 {
+        position: fixed;
+	top: 460px;
+	left: 350px;
+	width: 4500px;
+	height: 200px;
+    z-index:999;
+    }
+  #video {
+  position: absolute;
+  z-index: 1000;
+  text-align: center;
+    display:none;
+    max-height:600px;
+ 
+}
+
+#videoheader {
+  cursor: move;
+  z-index: -1;
+}
+        #moms {
+  position: absolute;
+  z-index: 9;
+  
+  text-align: center;
+
+max-height:450px;
+    
+}
+
+#momsheader {
+  
+  cursor: move;
+  z-index: 10;
+  
+}
+    #kingdom {
+  position: absolute;
+  z-index: 9;
+  
+  text-align: center;
+  
+max-height:450px;
+    
+}
+
+#kingdomheader {
+  
+  cursor: move;
+  z-index: 10;
+  
+}

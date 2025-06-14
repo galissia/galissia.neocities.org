@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gal's Corner</title>
+
+<link href="https://fonts.cdnfonts.com/css/elmono-2" rel="stylesheet">
+         <link rel="shortcut icon" type="image/x-icon" href="/favicon.png">       
+<style type="text/css">* {cursor: url(https://cur.cursors-4u.net/nature/nat-10/nat996.cur), auto !important;}</style><a href="https://www.cursors-4u.com/cursor/2011/12/29/tiny-star.html" target="_blank" title="Tiny Star"><img src="https://cur.cursors-4u.net/cursor.png" border="0" alt="Tiny Star" style="position:absolute; top: 0px; right: 0px;" /></a>
+ <script type="text/javascript">
+// <![CDATA[
+var colour="#ffffff"; // in addition to "random" can be set to any valid colour eg "#f0f" or "red"
+var sparkles=50;
+
+/****************************
+*  Tinkerbell Magic Sparkle *
+*(c)2005-13 mf2fm web-design*
+*  http://www.mf2fm.com/rv  *
+* DON'T EDIT BELOW THIS BOX *
+****************************/
+var x=ox=400;
+var y=oy=300;
+var swide=800;
+var shigh=600;
+var sleft=sdown=0;
+var tiny=new Array();
+var star=new Array();
+var starv=new Array();
+var starx=new Array();
+var stary=new Array();
+var tinyx=new Array();
+var tinyy=new Array();
+var tinyv=new Array();
+
+window.onload=function() { if (document.getElementById) {
+  var i, rats, rlef, rdow;
+  for (var i=0; i<sparkles; i++) {
+    var rats=createDiv(3, 3);
+    rats.style.visibility="hidden";
+    rats.style.zIndex="999";
+    document.body.appendChild(tiny[i]=rats);
+    starv[i]=0;
+    tinyv[i]=0;
+    var rats=createDiv(5, 5);
+    rats.style.backgroundColor="transparent";
+    rats.style.visibility="hidden";
+    rats.style.zIndex="999";
+    var rlef=createDiv(1, 5);
+    var rdow=createDiv(5, 1);
+    rats.appendChild(rlef);
+    rats.appendChild(rdow);
+    rlef.style.top="2px";
+    rlef.style.left="0px";
+    rdow.style.top="0px";
+    rdow.style.left="2px";
+    document.body.appendChild(star[i]=rats);
+  }
+  set_width();
+  sparkle();
+}}
+
+function sparkle() {
+  var c;
+  if (Math.abs(x-ox)>1 || Math.abs(y-oy)>1) {
+    ox=x;
+    oy=y;
+    for (c=0; c<sparkles; c++) if (!starv[c]) {
+      star[c].style.left=(starx[c]=x)+"px";
+      star[c].style.top=(stary[c]=y+1)+"px";
+      star[c].style.clip="rect(0px, 5px, 5px, 0px)";
+      star[c].childNodes[0].style.backgroundColor=star[c].childNodes[1].style.backgroundColor=(colour=="random")?newColour():colour;
+      star[c].style.visibility="visible";
+      starv[c]=50;
+      break;
+    }
+  }
+  for (c=0; c<sparkles; c++) {
+    if (starv[c]) update_star(c);
+    if (tinyv[c]) update_tiny(c);
+  }
+  setTimeout("sparkle()", 40);
+}
+
+function update_star(i) {
+  if (--starv[i]==25) star[i].style.clip="rect(1px, 4px, 4px, 1px)";
+  if (starv[i]) {
+    stary[i]+=1+Math.random()*3;
+    starx[i]+=(i%5-2)/5;
+    if (stary[i]<shigh+sdown) {
+      star[i].style.top=stary[i]+"px";
+      star[i].style.left=starx[i]+"px";
+    }
+    else {
+      star[i].style.visibility="hidden";
+      starv[i]=0;
+      return;
+    }
+  }
+  else {
+    tinyv[i]=50;
+    tiny[i].style.top=(tinyy[i]=stary[i])+"px";
+    tiny[i].style.left=(tinyx[i]=starx[i])+"px";
+    tiny[i].style.width="2px";
+    tiny[i].style.height="2px";
+    tiny[i].style.backgroundColor=star[i].childNodes[0].style.backgroundColor;
+    star[i].style.visibility="hidden";
+    tiny[i].style.visibility="visible"
+  }
+}
+
+function update_tiny(i) {
+  if (--tinyv[i]==25) {
+    tiny[i].style.width="1px";
+    tiny[i].style.height="1px";
+  }
+  if (tinyv[i]) {
+    tinyy[i]+=1+Math.random()*3;
+    tinyx[i]+=(i%5-2)/5;
+    if (tinyy[i]<shigh+sdown) {
+      tiny[i].style.top=tinyy[i]+"px";
+      tiny[i].style.left=tinyx[i]+"px";
+    }
+    else {
+      tiny[i].style.visibility="hidden";
+      tinyv[i]=0;
+      return;
+    }
+  }
+  else tiny[i].style.visibility="hidden";
+}
+
+document.onmousemove=mouse;
+function mouse(e) {
+  if (e) {
+    y=e.pageY;
+    x=e.pageX;
+  }
+  else {
+    set_scroll();
+    y=event.y+sdown;
+    x=event.x+sleft;
+  }
+}
+
+window.onscroll=set_scroll;
+function set_scroll() {
+  if (typeof(self.pageYOffset)=='number') {
+    sdown=self.pageYOffset;
+    sleft=self.pageXOffset;
+  }
+  else if (document.body && (document.body.scrollTop || document.body.scrollLeft)) {
+    sdown=document.body.scrollTop;
+    sleft=document.body.scrollLeft;
+  }
+  else if (document.documentElement && (document.documentElement.scrollTop || document.documentElement.scrollLeft)) {
+    sleft=document.documentElement.scrollLeft;
+    sdown=document.documentElement.scrollTop;
+  }
+  else {
+    sdown=0;
+    sleft=0;
+  }
+}
+
+window.onresize=set_width;
+function set_width() {
+  var sw_min=999999;
+  var sh_min=999999;
+  if (document.documentElement && document.documentElement.clientWidth) {
+    if (document.documentElement.clientWidth>0) sw_min=document.documentElement.clientWidth;
+    if (document.documentElement.clientHeight>0) sh_min=document.documentElement.clientHeight;
+  }
+  if (typeof(self.innerWidth)=='number' && self.innerWidth) {
+    if (self.innerWidth>0 && self.innerWidth<sw_min) sw_min=self.innerWidth;
+    if (self.innerHeight>0 && self.innerHeight<sh_min) sh_min=self.innerHeight;
+  }
+  if (document.body.clientWidth) {
+    if (document.body.clientWidth>0 && document.body.clientWidth<sw_min) sw_min=document.body.clientWidth;
+    if (document.body.clientHeight>0 && document.body.clientHeight<sh_min) sh_min=document.body.clientHeight;
+  }
+  if (sw_min==999999 || sh_min==999999) {
+    sw_min=800;
+    sh_min=600;
+  }
+  swide=sw_min;
+  shigh=sh_min;
+}
+
+function createDiv(height, width) {
+  var div=document.createElement("div");
+  div.style.position="absolute";
+  div.style.height=height+"px";
+  div.style.width=width+"px";
+  div.style.overflow="hidden";
+  return (div);
+}
+
+function newColour() {
+  var c=new Array();
+  c[0]=255;
+  c[1]=Math.floor(Math.random()*256);
+  c[2]=Math.floor(Math.random()*(256-c[1]/2));
+  c.sort(function(){return (0.5 - Math.random());});
+  return ("rgb("+c[0]+", "+c[1]+", "+c[2]+")");
+}
+// ]]>
+</script>
+<style>
+.marquee {
+            overflow: hidden;
+            position: relative;
+            left: 2px;
+            align-items: center;
+            justify-content: center;
+            height: 52px;
+            width: 790px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+.marquee {}
+
+        .marquee-inner {
+            display: block;
+            width: 3540px;
+            /* max width of banner */
+            position: absolute;
+            animation: marquee 30s linear infinite;
+            font-size: 0px;
+        }
+
+        .marquee-inner img {
+            margin-right: 1px;
+            margin-left: 1px;
+            margin-top: 1px;
+        }
+
+        .marquee-inner span {
+            float: left;
+            width: 50%;
+            overflow: hidden;
+        }
+
+        @keyframes marquee {
+            0% {
+                left: 0;
+            }
+
+            100% {
+                left: -1404px;
+                /* half of banner width */
+            }
+        }
+body{
+background-color: #B7C8F5;
+font-family: 'Elmono', sans-serif;
+}
+
+#container{
+display: flex;
+justify-content: center;
+align-items: center;
+width: 1000px;
+margin: 0 auto;
+border: 1px solid #6351C6;
+padding: 3px;
+}
+
+#box{
+width: 1000px;
+background-color: #ECFAFF;
+color: #000;
+border: 1px solid #6351C6;
+}
+
+#header{
+margin-bottom: 10px;
+padding: 10px;
+border-bottom: 1px solid #6351C6;
+background-image: linear-gradient(to right, #6351C6, #E3BFFF);
+color: #fff;
+letter-spacing: 3px;
+}
+
+#header h1{
+margin: 0px;
+}
+
+#side{
+float: left;
+width: 225px;
+padding: 0px 0px 5px 10px;
+overflow: hidden;
+}
+
+.sidebox{
+border: 1px solid #6351C6;
+margin: 0px 0px 5px 0px;
+}
+
+.sidecontent{
+padding: 0px 0px 0px 5px;
+color: #6e5057;
+font-size: 17px;
+letter-spacing: 1px;
+}
+
+.sidecontent ul, li{
+margin: 0px;
+list-style-type: none;
+padding-left: 0px;
+}
+
+a{
+text-decoration: none;
+color: #6351C6;
+}
+
+a:visited{
+color: #6351C6;
+}
+
+a:hover{
+text-shadow: 0px 0px 2px #78beff;
+}
+
+#scrollcontainer{
+padding: 5px;
+}
+
+
+
+#main{
+float: right;
+width: 730px;
+overflow: scroll;
+overflow-x: hidden;
+overflow-y: auto;
+height: 671px; 
+padding: 0px 10px 5px 0px;
+}
+.mainboxes{
+border: 1px solid #6351C6;
+padding: 0px;
+margin: 0px 0px 5px 0px;
+}
+
+.subheader{
+background-image: linear-gradient(to right, #6351C6, #E3BFFF);
+border-bottom: 1px solid #6351C6;
+padding: 3px;
+color: #fff;
+letter-spacing: 3px;
+}
+
+.subheader h3{
+margin: 0px;
+}
+
+.mainboxescontent{
+padding: 0px 15px 0px 15px;
+color: #6e5057;
+font-size: 17px;
+overflow:scroll;
+overflow-x:hidden;
+max-height:600px;
+}
+
+#footer{
+clear: both;
+padding: 3px;
+border-top: 1px solid #6351C6;
+background-image: linear-gradient(to right, #6351C6, #E3BFFF);
+color: #fff;
+font-size: 14px;
+}
+
+#footer p{
+margin: 0px;
+}
+
+::-webkit-scrollbar{
+width: 8px; 
+}
+    
+::-webkit-scrollbar-track{
+background-color: #ECFAFF;
+}
+
+::-webkit-scrollbar-thumb{
+background-color: #6351C6;  
+}
+
+#credit{
+font-size: 12px;
+position: fixed;
+bottom: 0;
+right: 0;
+}
+#statuscafe {
+    padding: .5em;
+    
+   
+}
+#statuscafe-username {
+    margin-bottom: .5em;
+}
+#statuscafe-content {
+    margin: 0 1em 0.5em 1em;
+}
+.map {
+  list-style-image: url('https://64.media.tumblr.com/4859e9933e910e5b2b14011dfb60a4f6/tumblr_inline_p7gi26hl0i1qfc9y0_75sq.gifv');
+  line-height: 1.6;
+}
+.mapsub {
+  list-style-image: url('https://64.media.tumblr.com/4859e9933e910e5b2b14011dfb60a4f6/tumblr_inline_p7gi26hl0i1qfc9y0_75sq.gifv');
+}
+
+</style>
+<script>
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        var site_data = JSON.parse(this.responseText);
+        var num_arr = site_data.info.views.toString().split("");
+        var num_str = "";
+        for (i = 0; i < num_arr.length; i++) {
+            num_str += num_arr[i];
+            if ( (num_arr.length-1 - i) % 3 == 0 && (num_arr.length-1 - i) != 0 ) {num_str += ",";}
+            var date_str = site_data.info.last_updated;
+            var date_obj = new Date(site_data.info.last_updated);
+var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+document.getElementById("lastupdate").innerHTML = days[date_obj.getDay()] + " " + months[date_obj.getMonth()] + " " + date_obj.getDate() + ", " + date_obj.getFullYear();
+        }
+        document.getElementById("hitcount").innerHTML = num_str;
+    }
+};
+xhttp.open("GET", "https://weirdscifi.ratiosemper.com/neocities.php?sitename=galissia", true);
+xhttp.send();
+</script>
+            <link rel="stylesheet" href="https://magical-ring.neocities.org/ring-codes/magical-ring-papercrow.css">
+          
+</head>
+
+<body>
+
+<div id="container">
+
+<div id="box">
+
+<div id="header"><h1 style="text-align:center">☆ Gal's Corner ☆</h1>
+</div>
+
+
+<div id="side">
+
+<div class="sidebox">
+
+<div class="subheader"><h3>Navigate</h3></div>
+
+<div class="sidecontent">
+
+<!-- LINK BOX 1 -->
+
+<ul>
+<li><a href="https://galissia.neocities.org/about">☆ about me!</a></li>
+<li><a href="https://galissia.neocities.org/Interests">☆ Interests</a></li>
+<li><a href="https://galissia.neocities.org/websites">☆ neat links</a></li>
+<li><a href="https://galissia.thoughts.page">☆ blog</a></li>
+<li><a href="https://galissia.neocities.org/changelog">☆ changelog</a></li>
+<li><a href="https://galissia.neocities.org/map">☆ sitemap</a></li>
+<li><a href="https://galissia.neocities.org/index">☆ home</a></li>
+</ul>
+
+<!-- END LINK BOX 1 -->
+
+</div>
+</div>
+
+<div class="sidebox">
+
+<div class="subheader"><h3>Fun Stuff</h3></div>
+
+<div class="sidecontent">
+
+<!-- LINK BOX 2 -->
+
+<li><a href="https://users3.smartgb.com/g/g.php?a=s&i=g36-36095-aa">☆ guestbook</a></li>
+<li><a href="https://galissia.neocities.org/stamps">☆ stamps</a></li>
+<li><a href="https://galissia.neocities.org/toybox">☆ toybox</a></li>
+<li><a href="/friendcodes.html">☆ friend codes</a></li>
+
+<!-- END LINK BOX 2 -->
+
+</div>
+</div>
+
+<div class="sidebox">
+
+<div class="subheader"><h3>☆ status ☆ </h3></div>
+
+<div class="sidecontent" id="scrollcontainer">
+
+<div id="scrolly">
+
+<!-- SCROLLBOX CONTENT -->
+
+
+<div id="scrollycontent" style="padding:5px;">
+
+<div id="statuscafe"><div id="statuscafe-username"></div><div id="statuscafe-content"></div></div><script src="https://status.cafe/current-status.js?name=galissia" defer></script>
+<!-- END SCROLLBOX CONTENT -->
+
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div id="main">
+
+<div class="mainboxes">
+
+<div class="subheader"><h3 style="text-align:center">cool websites & fanlistings </h3></div>
+
+<div class="mainboxescontent">
+<!-- REPLACE CONTENT BELOW WITH YOUR OWN -->
+ <br>
+<p style="clear:right;"><img src="https://i.pinimg.com/originals/9d/9b/d1/9d9bd13afce1a798d22ecfd9897730ed.gif" width="160px" style="float:left;margin:20px;"><img> <br><br>see all the fanlistings and webrings i'm a part of, as well as any websites I consider useful or neat :) <br><br>websites are sorted by category below!</p>
+  <br>
+  <br><br>
+  <hr>
+<br><br>
+<a href="http://fanique.altervista.org/moon/buttons.php"><img src="https://i.imgur.com/rVmBjId.png"></a>
+<a href="http://www.marheavenj.net/picture/index.php"><img src="http://www.marheavenj.net/picture/codes/004.jpg"></a>
+<a href="http://fanimated.net/mylittlepony/"><img src="https://fanimated.net/mylittlepony/codes/mlp88x31_1.gif"></a>
+<a href="http://www.noonvale.net/scoobydoo/
+"><img src="http://www.enchanted-rose.org/scoobydoo/8831_002.gif"></a>
+<a href="http://www.royal-drama.net/scoobydoo/"><img src="http://www.royal-drama.net/scoobydoo/codes/s3.png"></a>
+<a href="http://theatregirl.net/jekyll&hyde"><img src="https://theatregirl.net/jekyll&hyde/100x35_2.jpg"></a>
+<a href="https://fans.thislove.nu/ghosts
+"><img src="https://fans.thislove.nu/ghosts/categories/88x31/ghosts88x31_4.png"></a>
+<a href="http://movies.i-heart-you.net/bttf."><img src="https://imgur.com/p2E7wZP.png"  border="0"></a>
+<a href="http://www.ladyrose.buruma.net/animaniacs/1993"><img src="http://ladyrose.buruma.net/codesort/images/animaniacs75x50-1.png"></a>
+<a href="http://tardis.i-heart-you.net/doctorwho"><img src="https://i.ibb.co/s30Hp84/doctorwho100x50-01.gif" border="0"></a>
+<a href="https://auridon.com/elderscrolls/index.php"><img src="https://imgur.com/y6NJ17M.png" border="0"></a>
+<a href="https://fan.wings.nu/witchcraft/"><img src="http://shy.nu/tfl/codes/images/w04.png"  border="0"></a>
+<a href="https://theatregirl.net/midnight"><img src="https://theatregirl.net/midnight/50x50.png"></a>
+<a href="https://ryo.whorehau.se/index.php"><img src="images/50x50ryo1.png"></a>
+<a href="https://tardis.i-heart-you.net/s4/"><img src="https://i.postimg.cc/t45zTJRm/dw4-50x50-02.gif"></a>
+<a href="https://tv.i-heart-you.net/crowley/"><img src="images/crowley.gif"></a>
+<a href="http://contradiction.altervista.org/supernatural/index.php"><img src="images/supernatural.png"></a>
+<a href="https://go.wings.nu/index.php"><img src="images/go07.png"></a>
+<a href="https://yerfej.org/lucifer/"><img src="images/lucifer.png"></a>
+<a href="https://www.into-a-dream.com.ar/wwstv/"><img src="images/wwdits.png"></a>
+<br><br><br><hr><br>
+  
+  <center><h3>⚠ = flash warning/eyestrain warning (on homepage)</h3></center>
+  <div class="map">
+<ul>
+
+  <h3> Graphics </h3>
+  <hr style="width:25%;text-align:left;margin-left:0;margin-top:-15px;">
+<li><a href="https://adriansblinkiecollection.neocities.org"> ⚠ Blinkie Collection</a><sub style="position:relative; bottom:5px;"> - a collection of blinkies!</sub></li> 
+<li><a href="https://blinkiecollecti0n.neocities.org"> ⚠ Blinkie Archive</a><sub style="position:relative; bottom:5px;"> - same as above</sub></li>
+  <li><a href="https://blinkies.cafe"> ⚠ Blinkies.cafe</a><sub style="position:relative; bottom:5px;"> - same as above</sub></li>
+    <li><a href="https://glitter-graphics.com">Glitter Graphics</a><sub style="position:relative; bottom:5px;"> - 90's style glitter graphics & other gifs </sub></li>
+<li><a href="https://textures.neocities.org">TextureTown</a><sub style="position:relative; bottom:5px;"> - seamless patterns and textures for backgrounds</sub> </li>
+<li><a href="https://idbuttons.neocities.org/database/?">fluffmoths id buttons</a><sub style="position:relative; bottom:5px;"> - tiny identity buttons! i use these on my about page</sub></li>
+  <li><a href="https://web.badges.world"> ⚠ Web Badges World</a><sub style="position:relative; bottom:5px;"> - lots of badges </sub></li>
+    <li><a href="https://heongae.tumblr.com/favicons">Favicon</a><sub style="position:relative; bottom:5px;"> - some cute favicons/tiny pixels </sub></li>
+    <li><a href="https://gifcities.org">GifCities</a><sub style="position:relative; bottom:5px;"> - a search engine for thousands of archived gifs from GeoCities</sub></li>
+<li><a href="https://pixelsafari.neocities.org">Coco's Pixel Safari</a><sub style="position:relative; bottom:5px;"> -  a collection of various types of graphics</sub></li>
+  <li><a href="https://pixelglade.net/misc/webnostalgia.html"> Pixel Glade</a><sub style="position:relative; bottom:5px;"> - pixels, buttons, and more </sub></li>
+  <li><a href="https://graphic.neocities.org/directory"> Bonnibel's Graphics</a><sub style="position:relative; bottom:5px;"> - lots of pixels </sub></li>
+<li><a href="https://favicons.neocities.org">Pixel Heaven </a><sub style="position:relative; bottom:5px;"> -  various graphics</sub> </li>
+  <li><a href="https://3dtext2gif.com">3Dtext2GIF </a><sub style="position:relative; bottom:5px;"> -  create animated gifs with your own text! i used this on my <a href="/about.html">about page</a></sub> </li>
+  <li><a href="https://www.3dgifmaker.com/FidgetSpinner">3D Gif Maker </a><sub style="position:relative; bottom:5px;"> -  create 3D gifs with your own images</sub> </li>
+  <li><a href="https://99gifshop.neocities.org">99GIF Shop </a><sub style="position:relative; bottom:5px;"> -  various old web style gifs</sub> </li>
+  <li><a href="https://www.internetbumperstickers.com">Internet Bumper Stickers </a><sub style="position:relative; bottom:5px;"> -  what it says on the tin</sub> </li>
+    </ul>
+  <br>
+  <ul>
+     <h3> Templates </h3>
+  <hr style="width:25%;text-align:left;margin-left:0;margin-top:-15px;">
+  <li><a href="https://goblin-heart.net/sadgrl/">Sadgrl Online </a><sub style="position:relative; bottom:5px;"> - templates, guides, and more useful info</sub> </li>
+  <li><a href="https://favicons.neocities.org">Repth's Themes </a><sub style="position:relative; bottom:5px;"> -  f2u themes/templates! my site uses a modified version of #12</sub> </li>
+  <li><a href="https://foollovers.com/te/index-nf00.html">Foollovers </a><sub style="position:relative; bottom:5px;"> -  cool templates. site is in japanese!</sub> </li>
+    <li><a href="https://almostsweet.neocities.org/design">Almost Sweet </a><sub style="position:relative; bottom:5px;"></sub> </li>
+    <li><a href="https://cepheus.neocities.org/content/layouts">Cepheus </a><sub style="position:relative; bottom:5px;"></sub> </li>
+    <li><a href="https://eggramen.neocities.org/code/css_testpages">eggramen </a><sub style="position:relative; bottom:5px;"></sub> </li>
+    <li><a href="https://neothemes.neocities.org">neothemes </a><sub style="position:relative; bottom:5px;"></sub> </li>
+    <li><a href="https://petrapixel.neocities.org/coding/layout-base-code">PetraPixel </a><sub style="position:relative; bottom:5px;"> - simple template with a guide</sub> </li>
+  </ul>
+  
+    <br>
+  <ul>
+     <h3> HTML/CSS </h3>
+  <hr style="width:25%;text-align:left;margin-left:0;margin-top:-15px;">
+  <li><a href="https://dannarchy.com/tut/tut_002">Neocities Hit Counter/ Last Updated </a><sub style="position:relative; bottom:5px;"> - display how many hits your site has and when it was last updated. I use this in my footer.</sub> </li>
+  <li><a href="https://status.cafe">status.cafe </a><sub style="position:relative; bottom:5px;"> -  update your status & display it on your site</sub> </li>
+  <li><a href="https://github.com/biancarosa/lastfm-last-played">last.fm</a><sub style="position:relative; bottom:5px;"> - shows your last listened to from last.fm. used on my home page</sub> </li>
+    <li><a href="http://dynamicdrive.com">DynamicDrive </a><sub style="position:relative; bottom:5px;"> - lots of html & css effects</sub> </li>
+    <li><a href="https://www.mf2fm.com/rv/">RV's Effects </a><sub style="position:relative; bottom:5px;"> - lots of html & JavaScript effects. I use the tinkerbell cursor trail code.</sub> </li>
+  </ul>
+    
+    <br>
+  <ul>
+     <h3> Other Resource Websites </h3>
+  <hr style="width:25%;text-align:left;margin-left:0;margin-top:-15px;">
+  <li><a href="https://webmastering.neocities.org">Want to make a website? </a><sub style="position:relative; bottom:5px;"> - lots of useful info for beginners</sub> </li>
+  <li><a href="https://cepheus.neocities.org/04">the wetlands </a><sub style="position:relative; bottom:5px;"> -  various links to lots of different sites</sub> </li>
+  <li><a href="https://pixelsafari.neocities.org/webring/">Re:source ring </a><sub style="position:relative; bottom:5px;"></sub> </li>
+    <li><a href="https://docs.google.com/presentation/d/1j75LuN8PzBCNdXrsFpkmEbel8fl4s-NsNffkvFZfoLc/edit#slide=id.gb1e534aabb_0_1"> ⚠ "Where the hell do I find any old web content?"</a><sub style="position:relative; bottom:5px;"></sub> </li>
+    <li><a href="https://lostletters.neocities.org/resources/">Lost Letters </a><sub style="position:relative; bottom:5px;"></sub> </li>
+    <li><a href="https://macaque.moe">macaque </a><sub style="position:relative; bottom:5px;"></sub> </li>
+    <li><a href="https://directory.cinni.net/index.php">Ichigo Directory</a></li>
+  </ul>
+
+    
+  </div>
+
+
+
+
+</div>
+
+</div>
+
+<br>
+
+
+
+</div>
+
+
+
+<style>
+.counter{
+ position: relative;
+ left: 45px;
+ bottom: 10px;
+ margin-bottom:
+ 
+}
+
+</style>
+
+
+<div id="footer">
+<p style="text-align:center">
+  Galissia © 2023 - 2024
+</p>
+<p style="text-align:center">
+  Last Updated: 
+  <span id="lastupdate"></span>
+</p>
+<center>
+  <img style="position: relative; right: 55px; top:15px; clear:left;"
+  src="/images/sitebutton.gif">
+</center>
+<div class="counter">
+<!-- FC2 Counter  Starts here -->
+<center><script language="javascript" type="text/javascript" src="//counter1.fc2.com/counter.php?id=39650497&main=1"></script><noscript><img src="//counter1.fc2.com/counter_img.php?id=39650497&main=1" /></noscript></center><br>
+<!-- FC2 Counter  Ends here -->
+</div>
+</div>
+
+</div>
+
+</div>
+
+<div id="credit"><a href="https://repth.neocities.org/index.html">@Repth</a></div>
+
+
+</body>
+
+</html>

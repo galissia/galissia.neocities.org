@@ -1,0 +1,275 @@
+
+        
+        
+        
+        
+        
+ 
+        
+        
+body{
+background-color: #434343;
+    background-image: url(https://f2.toyhou.se/file/f2-toyhou-se/images/23017967_4Ac9ycC1sSkfvCc.png);
+font-family: 'Elmono', sans-serif;
+    position:relative;
+    overflow-x: hidden;
+    
+}
+
+#container{
+display: flex;
+justify-content: center;
+align-items: center;
+width: 1400px;
+margin: 0 auto;
+
+padding: 3px;
+}
+
+#box{
+width: 1000px;
+background-color: #fdffec;
+color: #000;
+border: 1px solid #da8e15;
+}
+#box2{
+width: 1000px;
+    padding-left: 3px;
+    padding-right:5px;
+    padding-top: 3px;
+    padding-bottom:3px;
+border: 1px solid #da8e15;
+}
+
+
+#header{
+margin-bottom: 10px;
+padding: 10px;
+border-bottom: 1px solid #da8e15;
+background-image: linear-gradient(to right, #da8e15, #fff3ac);
+color: #fff;
+letter-spacing: 3px;
+}
+
+#header h1{
+margin: 0px;
+}
+
+#side{
+float: left;
+width: 225px;
+padding: 0px 0px 5px 10px;
+overflow: hidden;
+}
+
+.sidebox{
+border: 1px solid #da8e15;
+margin: 0px 0px 5px 0px;
+}
+
+
+.sidecontent{
+padding: 0px 0px 0px 5px;
+color: #6e5057;
+font-size: 17px;
+letter-spacing: 1px;
+overflow-y: auto;
+overflow-x: hidden;
+max-height: 275px;
+}
+
+.sidecontent ul, li{
+margin: 0px;
+list-style-type: none;
+padding-left: 0px;
+}
+
+a{
+text-decoration: none;
+color: #da8e15;
+}
+
+a:visited{
+color: #bd6d46;
+}
+
+a:hover{
+text-shadow: 0px 0px 2px #ff7878;
+}
+
+hr {
+    border-color: rgba(218, 142, 21, 0.22);
+}
+
+
+#scrollcontainer{
+padding: 5px;
+overflow: scroll;
+overflow-x: hidden;
+overflow-y: auto;
+}
+
+.webrings{
+padding: 5px;
+overflow-x: hidden;
+overflow-y: auto;
+max-height: 340px;
+}
+
+
+.windowtitle {
+    font:
+        9px 'Elmono' black,
+        arial;
+   
+    color: #fff;
+   background-image: linear-gradient(to right, #da8e15, #fff3ac);
+    letter-spacing: 3px;
+    padding-left: 4px;
+    border: 1px solid #da8e15;
+    border-bottom: hidden;
+    padding-top: 2px;
+    padding-bottom:2px;
+    margin-left:2px;
+    margin-right:2px;
+    margin-top:2px;
+}
+
+.windowbox {
+    background: #fdffec;
+    border-left: 1px double#666;
+    border-right: 1px double #da8e15;
+    border-bottom: 1px double #da8e15;
+    border-top: 1px double #da8e15;
+    margin-left:2px;
+    margin-right:2px;
+    padding: 4px;
+    margin-bottom: 4px;
+    color: #6e5057;
+}
+.windowtitle2 {
+    font:
+        9px 'Elmono' black,
+        arial;
+   
+    color: #fff;
+   background-image: linear-gradient(to right, #da8e15, #fff3ac);
+    letter-spacing: 3px;
+    padding-left: 4px;
+    border: 1px solid #da8e15;
+    border-bottom: hidden;
+    padding-top: 2px;
+    padding-bottom:2px;
+    margin-left:2px;
+    margin-right:2px;
+    margin-top:2px;
+    width: 185px;
+}
+
+.windowbox2 {
+    background: #fdffec;
+    border-left: 1px double#666;
+    border-right: 1px double #da8e15;
+    border-bottom: 1px double #da8e15;
+    border-top: 1px double #da8e15;
+    margin-left:2px;
+    margin-right:2px;
+    padding: 4px;
+    margin-bottom: 4px;
+    color: #6e5057;
+    width:180px;
+    
+}
+
+#updateboxes {
+    width:250px;
+       padding:1px;
+    position: relative;
+
+}
+ul{
+  list-style-image: url('https://64.media.tumblr.com/4859e9933e910e5b2b14011dfb60a4f6/tumblr_inline_p7gi26hl0i1qfc9y0_75sq.gifv');
+}
+
+
+#main{
+float: left;
+width: 740px;
+overflow: hidden;
+padding: 10px 0px 0px 10px;
+}
+
+.introblurb{
+text-indent: 25px;
+}
+.mainboxes{
+border: 1px solid #da8e15;
+padding: 0px;
+margin: 0px 0px 5px 0px;
+}
+
+
+.subheader{
+background-image: linear-gradient(to right, #da8e15, #fff3ac);
+border-bottom: 1px solid #da8e15;
+padding: 3px;
+color: #fff;
+letter-spacing: 3px;
+}
+
+.subheader h3{
+margin: 0px;
+}
+
+.mainboxescontent{
+padding: 0px 15px 0px 15px;
+color: #6e5057;
+font-size: 17px;
+}
+
+
+#footer{
+clear: both;
+padding: 3px;
+max-height: 85px;
+border-top: 1px solid #da8e15;
+background-image: linear-gradient(to right, #da8e15, #fff3ac);
+color: #fff;
+font-size: 14px;
+}
+
+#footer p{
+margin: 0px;
+}
+
+::-webkit-scrollbar{
+width: 5px; 
+}
+    
+::-webkit-scrollbar-track{
+background-color: #fdffec;
+}
+
+::-webkit-scrollbar-thumb{
+background-color: #da8e15;  
+}
+
+#credit{
+font-size: 12px;
+position: fixed;
+bottom: 0;
+right: 0;
+}
+#statuscafe {
+    padding: .5em;
+    
+   
+}
+#statuscafe-username {
+    margin-bottom: .5em;
+
+}
+#statuscafe-content {
+    margin: 0 1em 0.5em 1em;
+
+}

@@ -1,0 +1,217 @@
+.marquee {
+            overflow: hidden;
+            position: relative;
+            left: 2px;
+            align-items: center;
+            justify-content: center;
+            height: 52px;
+            width: 790px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        
+
+.marquee {}
+
+        .marquee-inner {
+            display: block;
+            width: 3540px;
+            /* max width of banner */
+            position: absolute;
+            animation: marquee 30s linear infinite;
+            font-size: 0px;
+        }
+
+        .marquee-inner img {
+            margin-right: 1px;
+            margin-left: 1px;
+            margin-top: 1px;
+        }
+
+        .marquee-inner span {
+            float: left;
+            width: 50%;
+            overflow: hidden;
+        }
+
+        @keyframes marquee {
+            0% {
+                left: 0;
+            }
+
+            100% {
+                left: -1404px;
+                /* half of banner width */
+            }
+        }
+        
+        
+     ul{
+  list-style-image: url('https://64.media.tumblr.com/4859e9933e910e5b2b14011dfb60a4f6/tumblr_inline_p7gi26hl0i1qfc9y0_75sq.gifv');
+}
+        
+        
+        
+        
+        
+ 
+        
+        
+body{
+background-color: #fdffec;
+font-family: 'Elmono', sans-serif;
+    overflow-x: hidden;
+}
+
+#container{
+display: flex;
+justify-content: center;
+align-items: center;
+width: 1000px;
+margin: 0 auto;
+border: 1px solid #da8e15;
+padding: 3px;
+    overflow-x: hidden;
+}
+
+#box{
+width: 1000px;
+background-color: #fdffec;
+color: #000;
+border: 1px solid #da8e15;
+    overflow-x: hidden;
+}
+
+#header{
+margin-bottom: 10px;
+padding: 10px;
+border-bottom: 1px solid #da8e15;
+background-image: linear-gradient(to right, #da8e15, #fff3ac);
+color: #fff;
+letter-spacing: 3px;
+}
+
+#header h1{
+margin: 0px;
+}
+
+#side{
+float: left;
+width: 225px;
+padding: 0px 0px 5px 10px;
+overflow: hidden;
+}
+
+.sidebox{
+border: 1px solid #da8e15;
+margin: 0px 0px 5px 0px;
+}
+
+
+.sidecontent{
+padding: 0px 0px 0px 5px;
+color: #6e5057;
+font-size: 17px;
+letter-spacing: 1px;
+overflow-y: auto;
+overflow-x: hidden;
+max-height: 275px;
+}
+
+.sidecontent ul, li{
+margin: 0px;
+list-style-type: none;
+padding-left: 0px;
+}
+
+a{
+text-decoration: none;
+color: #da8e15;
+}
+
+a:visited{
+color: #bd6d46;
+}
+
+a:hover{
+text-shadow: 0px 0px 2px #ff7878;
+}
+
+#scrollcontainer{
+padding: 5px;
+overflow: scroll;
+overflow-x: hidden;
+overflow-y: auto;
+}
+
+#webrings{
+padding: 5px;
+overflow-x: hidden;
+overflow-y: auto;
+max-height: 200px;
+}
+
+
+
+#main {
+    float: left;
+    width: 700px;
+    overflow: hidden;
+    padding: 0px 0px 0px 0px;
+}
+
+.introblurb{
+text-indent: 25px;
+}
+.mainboxes{
+border: 1px solid #da8e15;
+padding: 0px;
+margin: 0px 0px 5px 0px;
+    overflow-x:hidden;
+}
+
+
+.subheader{
+background-image: linear-gradient(to right, #da8e15, #fff3ac);
+border-bottom: 1px solid #da8e15;
+padding: 3px;
+color: #fff;
+letter-spacing: 3px;
+}
+
+.subheader h3{
+margin: 0px;
+}
+
+.mainboxescontent{
+padding: 0px 15px 0px 15px;
+font-size: 17px;
+        color: #6e5057;
+}
+
+hr {
+    border-color: rgba(218, 142, 21, 0.22);
+}
+
+#footer p{
+margin: 0px;
+}
+
+::-webkit-scrollbar{
+width: 8px; 
+}
+    
+::-webkit-scrollbar-track{
+background-color: #fdffec;
+}
+
+::-webkit-scrollbar-thumb{
+background-color: #da8e15;  
+}
+
+#credit{
+font-size: 12px;
+position: fixed;
+bottom: 0;
+right: 0;
+}

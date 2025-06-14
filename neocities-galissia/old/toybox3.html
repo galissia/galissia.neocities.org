@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gal's Corner</title>
+
+<link href="https://fonts.cdnfonts.com/css/elmono-2" rel="stylesheet">
+         <link rel="shortcut icon" type="image/x-icon" href="/favicon.png">
+<style type="text/css">* {cursor: url(https://cur.cursors-4u.net/nature/nat-10/nat996.cur), auto !important;}</style><a href="https://www.cursors-4u.com/cursor/2011/12/29/tiny-star.html" target="_blank" title="Tiny Star"><img src="https://cur.cursors-4u.net/cursor.png" border="0" alt="Tiny Star" style="position:absolute; top: 0px; right: 0px;" /></a>
+ <script type="text/javascript">
+// <![CDATA[
+var colour="#ffffff"; // in addition to "random" can be set to any valid colour eg "#f0f" or "red"
+var sparkles=50;
+
+/****************************
+*  Tinkerbell Magic Sparkle *
+*(c)2005-13 mf2fm web-design*
+*  http://www.mf2fm.com/rv  *
+* DON'T EDIT BELOW THIS BOX *
+****************************/
+var x=ox=400;
+var y=oy=300;
+var swide=800;
+var shigh=600;
+var sleft=sdown=0;
+var tiny=new Array();
+var star=new Array();
+var starv=new Array();
+var starx=new Array();
+var stary=new Array();
+var tinyx=new Array();
+var tinyy=new Array();
+var tinyv=new Array();
+
+window.onload=function() { if (document.getElementById) {
+  var i, rats, rlef, rdow;
+  for (var i=0; i<sparkles; i++) {
+    var rats=createDiv(3, 3);
+    rats.style.visibility="hidden";
+    rats.style.zIndex="999";
+    document.body.appendChild(tiny[i]=rats);
+    starv[i]=0;
+    tinyv[i]=0;
+    var rats=createDiv(5, 5);
+    rats.style.backgroundColor="transparent";
+    rats.style.visibility="hidden";
+    rats.style.zIndex="999";
+    var rlef=createDiv(1, 5);
+    var rdow=createDiv(5, 1);
+    rats.appendChild(rlef);
+    rats.appendChild(rdow);
+    rlef.style.top="2px";
+    rlef.style.left="0px";
+    rdow.style.top="0px";
+    rdow.style.left="2px";
+    document.body.appendChild(star[i]=rats);
+  }
+  set_width();
+  sparkle();
+}}
+
+function sparkle() {
+  var c;
+  if (Math.abs(x-ox)>1 || Math.abs(y-oy)>1) {
+    ox=x;
+    oy=y;
+    for (c=0; c<sparkles; c++) if (!starv[c]) {
+      star[c].style.left=(starx[c]=x)+"px";
+      star[c].style.top=(stary[c]=y+1)+"px";
+      star[c].style.clip="rect(0px, 5px, 5px, 0px)";
+      star[c].childNodes[0].style.backgroundColor=star[c].childNodes[1].style.backgroundColor=(colour=="random")?newColour():colour;
+      star[c].style.visibility="visible";
+      starv[c]=50;
+      break;
+    }
+  }
+  for (c=0; c<sparkles; c++) {
+    if (starv[c]) update_star(c);
+    if (tinyv[c]) update_tiny(c);
+  }
+  setTimeout("sparkle()", 40);
+}
+
+function update_star(i) {
+  if (--starv[i]==25) star[i].style.clip="rect(1px, 4px, 4px, 1px)";
+  if (starv[i]) {
+    stary[i]+=1+Math.random()*3;
+    starx[i]+=(i%5-2)/5;
+    if (stary[i]<shigh+sdown) {
+      star[i].style.top=stary[i]+"px";
+      star[i].style.left=starx[i]+"px";
+    }
+    else {
+      star[i].style.visibility="hidden";
+      starv[i]=0;
+      return;
+    }
+  }
+  else {
+    tinyv[i]=50;
+    tiny[i].style.top=(tinyy[i]=stary[i])+"px";
+    tiny[i].style.left=(tinyx[i]=starx[i])+"px";
+    tiny[i].style.width="2px";
+    tiny[i].style.height="2px";
+    tiny[i].style.backgroundColor=star[i].childNodes[0].style.backgroundColor;
+    star[i].style.visibility="hidden";
+    tiny[i].style.visibility="visible"
+  }
+}
+
+function update_tiny(i) {
+  if (--tinyv[i]==25) {
+    tiny[i].style.width="1px";
+    tiny[i].style.height="1px";
+  }
+  if (tinyv[i]) {
+    tinyy[i]+=1+Math.random()*3;
+    tinyx[i]+=(i%5-2)/5;
+    if (tinyy[i]<shigh+sdown) {
+      tiny[i].style.top=tinyy[i]+"px";
+      tiny[i].style.left=tinyx[i]+"px";
+    }
+    else {
+      tiny[i].style.visibility="hidden";
+      tinyv[i]=0;
+      return;
+    }
+  }
+  else tiny[i].style.visibility="hidden";
+}
+
+document.onmousemove=mouse;
+function mouse(e) {
+  if (e) {
+    y=e.pageY;
+    x=e.pageX;
+  }
+  else {
+    set_scroll();
+    y=event.y+sdown;
+    x=event.x+sleft;
+  }
+}
+
+window.onscroll=set_scroll;
+function set_scroll() {
+  if (typeof(self.pageYOffset)=='number') {
+    sdown=self.pageYOffset;
+    sleft=self.pageXOffset;
+  }
+  else if (document.body && (document.body.scrollTop || document.body.scrollLeft)) {
+    sdown=document.body.scrollTop;
+    sleft=document.body.scrollLeft;
+  }
+  else if (document.documentElement && (document.documentElement.scrollTop || document.documentElement.scrollLeft)) {
+    sleft=document.documentElement.scrollLeft;
+    sdown=document.documentElement.scrollTop;
+  }
+  else {
+    sdown=0;
+    sleft=0;
+  }
+}
+
+window.onresize=set_width;
+function set_width() {
+  var sw_min=999999;
+  var sh_min=999999;
+  if (document.documentElement && document.documentElement.clientWidth) {
+    if (document.documentElement.clientWidth>0) sw_min=document.documentElement.clientWidth;
+    if (document.documentElement.clientHeight>0) sh_min=document.documentElement.clientHeight;
+  }
+  if (typeof(self.innerWidth)=='number' && self.innerWidth) {
+    if (self.innerWidth>0 && self.innerWidth<sw_min) sw_min=self.innerWidth;
+    if (self.innerHeight>0 && self.innerHeight<sh_min) sh_min=self.innerHeight;
+  }
+  if (document.body.clientWidth) {
+    if (document.body.clientWidth>0 && document.body.clientWidth<sw_min) sw_min=document.body.clientWidth;
+    if (document.body.clientHeight>0 && document.body.clientHeight<sh_min) sh_min=document.body.clientHeight;
+  }
+  if (sw_min==999999 || sh_min==999999) {
+    sw_min=800;
+    sh_min=600;
+  }
+  swide=sw_min;
+  shigh=sh_min;
+}
+
+function createDiv(height, width) {
+  var div=document.createElement("div");
+  div.style.position="absolute";
+  div.style.height=height+"px";
+  div.style.width=width+"px";
+  div.style.overflow="hidden";
+  return (div);
+}
+
+function newColour() {
+  var c=new Array();
+  c[0]=255;
+  c[1]=Math.floor(Math.random()*256);
+  c[2]=Math.floor(Math.random()*(256-c[1]/2));
+  c.sort(function(){return (0.5 - Math.random());});
+  return ("rgb("+c[0]+", "+c[1]+", "+c[2]+")");
+}
+// ]]>
+</script>
+       
+
+<style>
+.marquee {
+            overflow: hidden;
+            position: relative;
+            left: 2px;
+            align-items: center;
+            justify-content: center;
+            height: 52px;
+            width: 790px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+.marquee {}
+
+        .marquee-inner {
+            display: block;
+            width: 3540px;
+            /* max width of banner */
+            position: absolute;
+            animation: marquee 30s linear infinite;
+            font-size: 0px;
+        }
+
+        .marquee-inner img {
+            margin-right: 1px;
+            margin-left: 1px;
+            margin-top: 1px;
+        }
+
+        .marquee-inner span {
+            float: left;
+            width: 50%;
+            overflow: hidden;
+        }
+
+        @keyframes marquee {
+            0% {
+                left: 0;
+            }
+
+            100% {
+                left: -1404px;
+                /* half of banner width */
+            }
+        }
+body{
+background-color: #B7C8F5;
+font-family: 'Elmono', sans-serif;
+}
+
+#container{
+display: flex;
+justify-content: center;
+align-items: center;
+width: 1000px;
+margin: 0 auto;
+border: 1px solid #6351C6;
+padding: 3px;
+}
+
+#box{
+width: 1000px;
+background-color: #ECFAFF;
+color: #000;
+border: 1px solid #6351C6;
+}
+
+#header{
+margin-bottom: 10px;
+padding: 10px;
+border-bottom: 1px solid #6351C6;
+background-image: linear-gradient(to right, #6351C6, #E3BFFF);
+color: #fff;
+letter-spacing: 3px;
+}
+
+#header h1{
+margin: 0px;
+}
+
+#side{
+float: left;
+width: 225px;
+padding: 0px 0px 5px 10px;
+overflow: hidden;
+}
+
+.sidebox{
+border: 1px solid #6351C6;
+margin: 0px 0px 5px 0px;
+}
+
+.sidecontent{
+padding: 0px 0px 0px 5px;
+color: #6e5057;
+font-size: 17px;
+letter-spacing: 1px;
+}
+
+.sidecontent ul, li{
+margin: 0px;
+list-style-type: none;
+padding-left: 0px;
+}
+
+a{
+text-decoration: none;
+color: #6351C6;
+}
+
+a:visited{
+color: #6351C6;
+}
+
+a:hover{
+text-shadow: 0px 0px 2px #78beff;
+}
+
+#scrollcontainer{
+padding: 5px;
+}
+
+
+
+#main{
+float: right;
+width: 730px;
+overflow: scroll;
+overflow-x: hidden;
+overflow-y: auto;
+height: 671px; 
+padding: 0px 10px 5px 0px;
+}
+.mainboxes{
+border: 1px solid #6351C6;
+padding: 0px;
+margin: 0px 0px 5px 0px;
+}
+
+.subheader{
+background-image: linear-gradient(to right, #6351C6, #E3BFFF);
+border-bottom: 1px solid #6351C6;
+padding: 3px;
+color: #fff;
+letter-spacing: 3px;
+}
+
+.subheader h3{
+margin: 0px;
+}
+
+.mainboxescontent{
+padding: 0px 15px 0px 15px;
+color: #6e5057;
+font-size: 17px;
+overflow:scroll;
+max-height:600px;
+}
+    
+.adoptables{
+        margin-bottom: 200px;
+    }
+
+.quizzes{
+        margin-top:80px;
+    }
+
+#footer{
+clear: both;
+padding: 3px;
+border-top: 1px solid #6351C6;
+background-image: linear-gradient(to right, #6351C6, #E3BFFF);
+color: #fff;
+font-size: 14px;
+}
+
+#footer p{
+margin: 0px;
+}
+
+::-webkit-scrollbar{
+width: 8px; 
+}
+    
+::-webkit-scrollbar-track{
+background-color: #ECFAFF;
+}
+
+::-webkit-scrollbar-thumb{
+background-color: #6351C6;  
+}
+
+#credit{
+font-size: 12px;
+position: fixed;
+bottom: 0;
+right: 0;
+}
+#statuscafe {
+    padding: .5em;
+    
+   
+}
+#statuscafe-username {
+    margin-bottom: .5em;
+}
+#statuscafe-content {
+    margin: 0 1em 0.5em 1em;
+}
+
+
+</style>
+<script>
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        var site_data = JSON.parse(this.responseText);
+        var num_arr = site_data.info.views.toString().split("");
+        var num_str = "";
+        for (i = 0; i < num_arr.length; i++) {
+            num_str += num_arr[i];
+            if ( (num_arr.length-1 - i) % 3 == 0 && (num_arr.length-1 - i) != 0 ) {num_str += ",";}
+            var date_str = site_data.info.last_updated;
+            var date_obj = new Date(site_data.info.last_updated);
+var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+document.getElementById("lastupdate").innerHTML = days[date_obj.getDay()] + " " + months[date_obj.getMonth()] + " " + date_obj.getDate() + ", " + date_obj.getFullYear();
+        }
+        document.getElementById("hitcount").innerHTML = num_str;
+    }
+};
+xhttp.open("GET", "https://weirdscifi.ratiosemper.com/neocities.php?sitename=galissia", true);
+xhttp.send();
+</script>
+</head>
+
+<body>
+
+<div id="container">
+
+<div id="box">
+
+<div id="header"><h1 style="text-align:center">☆ Gal's Corner ☆</h1>
+</div>
+
+
+<div id="side">
+
+<div class="sidebox">
+
+<div class="subheader"><h3>Navigate</h3></div>
+
+<div class="sidecontent">
+
+<!-- LINK BOX 1 -->
+
+<ul>
+<li><a href="https://galissia.neocities.org/about">☆ about me!</a></li>
+<li><a href="https://galissia.neocities.org/Interests">☆ Interests</a></li>
+<li><a href="https://galissia.neocities.org/websites">☆ neat links</a></li>
+<li><a href="https://galissia.thoughts.page">☆ blog</a></li>
+<li><a href="https://galissia.neocities.org/changelog">☆ changelog</a></li>
+<li><a href="https://galissia.neocities.org/map">☆ sitemap</a></li>
+<li><a href="https://galissia.neocities.org/index">☆ home</a></li>
+</ul>
+
+<!-- END LINK BOX 1 -->
+
+</div>
+</div>
+
+<div class="sidebox">
+
+<div class="subheader"><h3>Fun Stuff</h3></div>
+
+<div class="sidecontent">
+
+<!-- LINK BOX 2 -->
+
+<li><a href="https://users3.smartgb.com/g/g.php?a=s&i=g36-36095-aa">☆ guestbook</a></li>
+<li><a href="https://galissia.neocities.org/stamps">☆ stamps</a></li>
+<li><a href="https://galissia.neocities.org/toybox">☆ toybox</a></li>
+<li><a href="/friendcodes.html">☆ friend codes</a></li>
+
+
+<!-- END LINK BOX 2 -->
+
+</div>
+</div>
+
+<div class="sidebox">
+
+<div class="subheader"><h3>☆ status ☆ </h3></div>
+
+<div class="sidecontent" id="scrollcontainer">
+
+<div id="scrolly">
+
+<!-- SCROLLBOX CONTENT -->
+
+
+<div id="scrollycontent" style="padding:5px;">
+<div id="statuscafe"><div id="statuscafe-username"></div><div id="statuscafe-content"></div></div><script src="https://status.cafe/current-status.js?name=galissia" defer></script>
+
+<!-- END SCROLLBOX CONTENT -->
+
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div id="main">
+
+<div class="mainboxes">
+
+<div class="subheader"><h3 style="text-align:center">toybox</h3></div>
+
+<div class="mainboxescontent">
+<br><p style="clear:right;"><img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/fb372f94-1d5b-45b9-a6cf-0f7f5db0174d/dbe956u-9f3e8e7a-f1a9-44b2-8e08-55ea99e8ddee.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2ZiMzcyZjk0LTFkNWItNDViOS1hNmNmLTBmN2Y1ZGIwMTc0ZFwvZGJlOTU2dS05ZjNlOGU3YS1mMWE5LTQ0YjItOGUwOC01NWVhOTllOGRkZWUuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.45MWYPiOQyB7Mvckt0ruC9IqedBT489o4SCSCDosHPk" width="300px" style="float:left;margin:20px;"></img><br><br> <br>a place for me to keep any quiz results or digital pets and the like that I collect from around the web :)</p>
+<br>
+
+<hr class="dotted"><br>
+<div class="adoptables">
+<a href="https://wobble.town/visit/1817"><img src="https://wobble.town/visit/1817/wobble.gif" width="50px;" style="float:left; margin-right:20px; margin-top:40px;"></a><br>
+<a href="https://tamanotchi.world/11955c"><img src="https://tamanotchi.world/i2/11955" alt="It's tamaNOTchi! Click to feed!" style="float:left; margin-right:20px;"></a>
+<a href="https://goblincat.neocities.org/dragonnest"><img src="https://files.catbox.moe/9cv8tu.png" width="100px;" style="float:left;"></a>
+<a href="https://goblincat.neocities.org/dragonnest"><img src="https://files.catbox.moe/ebjfx7.png" width="100px;" style="float:left;"></a>
+<a href="https://goblincat.neocities.org/dragonnest"><img src="https://files.catbox.moe/52l87p.png" width="100px;" style="float:left;"></a>
+<a href="https://goblincat.neocities.org/dragonnest"><img src="https://files.catbox.moe/un0kp4.png" width="100px;" style="float:left;"></a>
+<a href="https://goblincat.neocities.org/unicornfield"><img src="https://files.catbox.moe/lk7f1d.png" width="150px;" style="float:left; margin-top:-70px;"></a>
+<a href="https://goblincat.neocities.org/unicornfield"><img src="https://files.catbox.moe/9vllm9.png" width="150px;" style="float:left; margin-top:-70px; margin-left:-20px;"></a>
+<a href="https://spiders.neocities.org/z-adopts"><img src="https://files.catbox.moe/6kx17w.png" width="75px;" style="float:left;"></a>
+</div>
+<br>
+<br>
+<br>
+    <br>
+    <br>
+    <br>
+    
+<hr>
+    
+<div class="quizzes">
+<center><iframe width="314" height="321" margin-right="-50px;" scrolling="no" src="https://gifypet.neocities.org/pet/pet.html?name=Acorn&dob=1713413567&gender=m&element=Earth&pet=https%3A%2F%2Fi.postimg.cc%2FvH4VCdmk%2Fmonkey-0073.gif&map=tree.jpg&background=&tablecolor=black&textcolor=black" frameborder="0"></iframe>
+    <br>
+    <table width="320" height="240" border="0" align="center" cellpadding="2" cellspacing="5" bgcolor="#957cdc">
+  <tr>
+    <td height="1" align="center" style="color: #FFFFFF; font-family: Verdana, Arial, Helvetica, sans-serif; font-weight: bold">
+      <span style="font-size: xx-large">Hello!</span><br>
+      <span style="font-size: medium">My name is</span>
+    </td>
+  </tr>
+  <tr>
+    <td height="1" valign="middle" align="center" bgcolor="#ecfaff" style="color: #000000; font-family: Marker Felt, Verdana, Arial, Helvetica, sans-serif">
+      Gal
+    </td>
+  </tr>
+  <tr>
+    <td height="1" align="center" style="color: #FFFFFF; font-family: Verdana, Arial, Helvetica, sans-serif; font-weight: bold">
+      <span style="font-size: medium">I am</span>
+    </td>
+  </tr>
+  <tr>
+    <td valign="middle" align="center" bgcolor="#ecfaff" style="color: #000000; font-family: Marker Felt, Verdana, Arial, Helvetica, sans-serif">
+      9w8, adult, aromantic, artsy, autistic, big sister, bisexual, caring, cat lover, cisgender woman, creative, dog lover, eclectic, female, film major, geek, ISFP, Ms., multifacetted, New Jersian, open, polycurious, quiet, quiz whore, spiritual, student, trustworthy, understanding, witch
+    </td>
+  </tr>
+  <tr>
+    <td height="1" align="center" style="color: #FFFFFF; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small">
+      <a href="http://www.yaygender.net/pages/gender.pl" style="color: #FFFFFF">Who are you?</a>
+    </td>
+  </tr>
+</table>
+    <br>
+    <center><table bgcolor="#6495ED" border=1 width="50%"><tr><td><center><font color="#000000"><big>you are cornflowerblue</big><br>#6495ED</font></center></td></tr><tr><td bgcolor="#FFFFFF"><center><font color="#000000" size=-1><br>Your dominant hues are cyan and blue. You like people and enjoy making friends. You're conservative and like to make sure things make sense before you step into them, especially in relationships. You are curious but respected for your opinions by people who you sometimes wouldn't even suspect.<br><br>Your saturation level is medium - You're not the most decisive go-getter, but you can get a job done when it's required of you. You probably don't think the world can change for you and don't want to spend too much effort trying to force it.<br><br>Your outlook on life is bright. You see good things in situations where others may not be able to, and it frustrates you to see them get down on everything.<br></font></center></td></tr><tr><td><center><a href="http://spacefem.com/quizzes/colors">the spacefem.com html color quiz</a></center></td></tr></table></center>
+    <br>
+    
+<!-- // Begin Current Moon Phase HTML (c) MoonConnection.com // --><table cellpadding="0" cellspacing="0" border="0" width="212"><tr><td align="center"><a href="https://www.moonconnection.com" target="mc_moon_ph"><img src="https://www.moonmodule.com/cs/dm/hn.gif" width="212" height="136" border="0" alt="" /></a><div style="position:relative;width:128px;"><div style="position:absolute;top:-20px;left:6px;background:#000000;width:116px;text-align:center;"><a href="https://www.moonconnection.com/" target="mc_moon_ph"><font color="#7F7F7F" size="1" face="arial,helvetica,sans-serif"><span style="color:#7F7F7F;font-family:arial,helvetica,sans-serif;font-size:10px;">moon data</span></a></font></div></div></td></tr></table><!-- // end moon phase HTML // --></center>
+<!-- END CONTENT --><br>
+<!-- Begin I Write Like Badge -->
+<center><div style="text-align:center;border:1px solid #ccc;font:11px/0.9 Arial,sans-serif;overflow:auto;max-width:380px;padding:5px;background:#ffffff;color:#ddd;box-shadow:0 1px 3px rgba(0,0,0,0.3)"><div style="font:20px/0.9 Georgia,serif;background:url(//iwl.me/static/c.png);padding:20px;text-shadow:#fff 0 1px;color:#555;margin:0 0 5px 0">I write like<br><a href="https://iwl.me/writer/George_Orwell" style="font-size:30px;color:#698B22;text-decoration:none">George Orwell</a></div><a style="text-decoration:none;color:#aaa" href="https://iwl.me/writer/George_Orwell">About George Orwell</a> | <a href="https://iwl.me" style="text-decoration:none;color:#aaa"><b>Analyze your text</b></a></div></center>
+<!-- End I Write Like Badge -->
+<p align=center><a target=_blank href=https://www.nodiatis.com/personality.htm><img border=0 src=https://www.nodiatis.com/pub/10.jpg></a></p>
+<div class="results" style="background-color: #8396ec;color: #ffdc52;width: 400px;display: block;padding: 10px;border: 1px solid;margin: 0 auto;font-family: Times;font-size: 11pt;">
+        <div style="display: flex; justify-content: space-around;">
+          <div style="padding: 5px">
+            <p>Your immortal lover would be...</p>
+            <h1 class="title">Hestia</h1>
+            <p class="description">As a lover of the goddess of the hearth, you long for stability and emotional maturity in your relationships.  You like the heat of love, but not in the fiery way of passion, but the warmth of looking at a lifelong friend.</p>
+          </div>
+          <img class="image" style="width: 50%;border: 1px solid" alt="Hestia" src="https://i.ibb.co/60h1w3z/hestia.jpg">
+        </div>
+        <small>
+          <a href="https://hekate.neocities.org">Want your own? Visit hekate.neocities.org!</a>
+        </small>
+      </div>
+      <div class="results" style="width: 200px;background-color: #fff;color: #000;display: block;padding: 10px;border: 1px solid;margin: 0 auto;font-family: 'times';font-size: '15pt'; float:left;">
+        <p style="margin: 0">This page is protected by a</p>
+        <h1 class="title" style="margin: 0">BUTTERFLY</h1>
+        <img class="image" style="max-width: 160px;border: 1px solid" alt="BUTTERFLY" src="https://i.ibb.co/wwhYvRp/butterfly.jpg">
+        <p class="description">The Large Blue butterfly is a species of carnivorous butterfly, and went extinct in Britain in 1979.  It has since been reintroduced with new conservation methods.</p>
+        <small>
+          <a href="https://hekate.neocities.org">Want your own? Visit hekate.neocities.org!</a>
+        </small>
+      </div>
+      
+      <center><a href="http://www.springhole.net" target="SH.net"><img src="http://i213.photobucket.com/albums/cc224/SyeraMiktayee/QuizPics/tag_werewolf.gif"></a></center>
+      <center><a href="http://www.springhole.net" target="SH.net"><img src="http://i213.photobucket.com/albums/cc224/SyeraMiktayee/QuizPics/whatfairy_autumnfairy.gif" ></a></center>
+      <center><a href="http://www.springhole.net" target="SH.net"><img src="http://i213.photobucket.com/albums/cc224/SyeraMiktayee/QuizPics/fairytalequiz_briarrose.gif"></a></center>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+<div id="footer"><p style="text-align:center">Galissia © 2023 - 2024</p>
+<p style="text-align:center">Last Updated: <span id="lastupdate"></span></p><br><center><img src="/images/sitebutton.gif"></center></div>
+
+</div>
+
+</div>
+
+<div id="credit"><a href="https://repth.neocities.org/index.html">@Repth</a></div>
+
+</body>
+
+</html>
